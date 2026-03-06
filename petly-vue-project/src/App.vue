@@ -1,85 +1,174 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+/**
+ * HomeView.vue
+ * Vista principal que coordina los stores de categorías y animales.
+ */
+
+import { onMounted, computed, ref } from "vue";
+import { storeToRefs } from "pinia";
+
+import CategoryFilter from "@/components/CategoryFilter.vue";
+import DomesticAnimalGrid from "@/components/DomesticAnimalGrid.vue";
+import SearchBar from "@/components/SearchBar.vue";
+
+import { useCategoryStore } from "@/stores/categoryStore";
+import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore";
+
+// Stores
+const categoryStore = useCategoryStore();
+const animalStore = useDomesticAnimalStore();
+
+const { categories, selectedCategoryId } = storeToRefs(categoryStore);
+const { animals } = storeToRefs(animalStore);
+
+// State
+const searchQuery = ref("");
+
+// Computed
+const filteredAnimals = computed(() => {
+  return animals.value.filter((animal) => {
+    const matchesCategory =
+      selectedCategoryId.value === "all" ||
+      animal.categoryId === selectedCategoryId.value;
+
+    const matchesSearch = animal.name
+      .toLowerCase()
+      .includes(searchQuery.value.toLowerCase());
+
+    return matchesCategory && matchesSearch;
+  });
+});
+
+// Methods
+function handleSearch(query: string) {
+  searchQuery.value = query;
+}
+
+function handleCategorySelect(id: string) {
+  categoryStore.setSelectedCategory(id);
+}
+
+// Lifecycle
+onMounted(async () => {
+  await categoryStore.fetchCategories();
+  await animalStore.fetchAnimals();
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <main class="max-w-7xl mx-auto px-6">
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <!-- HEADER -->
+    <header class="flex items-center justify-between py-6 border-b border-gray-200">
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+      <h1 class="text-2xl font-black tracking-tight">
+        PETLY.CO
+      </h1>
+
+      <div class="w-96">
+        <SearchBar @search="handleSearch" />
+      </div>
+
+    </header>
+
+
+    <!-- CATEGORIES -->
+    <section class="mt-10">
+
+      <div class="flex items-center justify-between mb-6">
+
+        <h2 class="text-xl font-bold">
+          Categories
+        </h2>
+
+        <button
+          class="bg-green-600 text-white text-sm px-4 py-1 rounded-full hover:bg-green-700 transition"
+        >
+          See all
+        </button>
+
+      </div>
+
+      <CategoryFilter
+        :categories="categories"
+        :active-category-id="selectedCategoryId"
+        @select="handleCategorySelect"
+      />
+
+    </section>
+
+
+    <!-- ANIMAL GRID -->
+    <section class="mt-12 mb-16">
+
+      <DomesticAnimalGrid
+        :animals="filteredAnimals"
+      />
+
+    </section>
+
+
+    <!-- LOAD MORE -->
+    <div class="flex justify-center mb-20">
+      <button
+        class="border border-gray-300 px-6 py-2 rounded-full text-sm hover:bg-gray-100 transition"
+      >
+        Load More Pets
+      </button>
     </div>
-  </header>
 
-  <RouterView />
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-200 pt-16 pb-10">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-2">
+          <h2 class="text-2xl font-black mb-4">PETLY.CO</h2>
+
+          <p class="text-gray-500 max-w-sm text-sm">
+            Find what other people think about your pets and say something about them too.
+          </p>
+
+          <div class="flex gap-4 mt-6 text-gray-400 text-sm">
+            <span class="cursor-pointer hover:text-black">𝕏</span>
+            <span class="cursor-pointer hover:text-black">Facebook</span>
+            <span class="cursor-pointer hover:text-black">Instagram</span>
+            <span class="cursor-pointer hover:text-black">GitHub</span>
+          </div>
+        </div>
+
+
+        <div>
+          <h3 class="font-semibold mb-4">Company</h3>
+
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="hover:text-black cursor-pointer">About</li>
+            <li class="hover:text-black cursor-pointer">Features</li>
+            <li class="hover:text-black cursor-pointer">Works</li>
+            <li class="hover:text-black cursor-pointer">Career</li>
+          </ul>
+        </div>
+
+
+        <div>
+          <h3 class="font-semibold mb-4">Help</h3>
+
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="hover:text-black cursor-pointer">Customer Support</li>
+            <li class="hover:text-black cursor-pointer">My Account</li>
+            <li class="hover:text-black cursor-pointer">Terms & Conditions</li>
+            <li class="hover:text-black cursor-pointer">Privacy Policy</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="border-t mt-10 pt-6 text-xs text-gray-400">
+        Petly 2024. All Rights Reserved
+      </div>
+
+    </footer>
+
+  </main>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
