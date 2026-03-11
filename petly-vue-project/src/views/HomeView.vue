@@ -68,19 +68,7 @@ onMounted(() => {
     <!-- CATEGORIES -->
     <section class="mt-10">
 
-      <div class="flex items-center justify-between mb-6">
-
-        <h2 class="text-xl font-bold">
-          Categories
-        </h2>
-
-        <button
-          class="bg-green-600 text-white text-sm px-4 py-1 rounded-full hover:bg-green-700 transition"
-        >
-          See all
-        </button>
-
-      </div>
+      
 
       <CategoryFilter
         :categories="categories"
