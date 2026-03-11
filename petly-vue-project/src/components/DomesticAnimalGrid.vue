@@ -5,7 +5,7 @@ import DomesticAnimalCard from "@/components/DomesticAnimalCard.vue";
 
 // Props
 defineProps<{
-  animals: PetInterface[];
+  animals: DomesticAnimalInterface[];
 }>();
 </script>
 

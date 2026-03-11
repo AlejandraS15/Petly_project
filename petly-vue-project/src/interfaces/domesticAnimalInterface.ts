@@ -13,7 +13,7 @@ export interface DomesticAnimalInterface {
   commonDisease: string
   countryOrigin: string
   history: string
-  urlImage: string
+  image: string
   category: CategoryInterface
   reviews: ReviewInterface[]
 }

@@ -32,10 +32,12 @@ const searchQuery = ref<string>("");
  */
 const filteredAnimals = computed(() => {
   return animals.value.filter((animal) => {
+
     const matchesCategory =
       selectedCategoryId.value === "all" ||
-      animal.categoryId === selectedCategoryId.value;
-    const matchesSearch = animal.name
+      animal.category.id === selectedCategoryId.value;
+
+    const matchesSearch = animal.breed
       .toLowerCase()
       .includes(searchQuery.value.toLowerCase());
 

@@ -1,11 +1,9 @@
 <script setup lang="ts">
-// Types
-import type { PetInterface } from "@/interfaces/petInterface"
+import type { DomesticAnimalInterface } from "@/interfaces/domesticAnimalInterface"
 
-// Props
 defineProps<{
-  pet: PetInterface
-}>()
+  animals: DomesticAnimalInterface[];
+}>();
 </script>
 
 <template>
@@ -20,9 +18,7 @@ defineProps<{
       />
     </div>
 
-    <!-- Información -->
     <div class="mt-4">
-
       <h3 class="text-lg font-bold text-gray-800">
         {{ pet.breed }}
       </h3>
@@ -30,7 +26,6 @@ defineProps<{
       <p class="text-sm text-gray-500">
         {{ pet.category.name }}
       </p>
-
     </div>
 
   </div>

@@ -22,7 +22,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       commonDisease: 'Polycystic kidney disease',
       countryOrigin: 'Iran',
       history: 'One of the oldest cat breeds.',
-      urlImage: '/images/animals/persa.png',
+      image: '/images/animals/persa.png',
       category: catCategory,
       reviews: []
     },
@@ -37,7 +37,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       commonDisease: 'Patellar luxation',
       countryOrigin: 'Mexico',
       history: 'Descendant of the Techichi dog.',
-      urlImage: '/images/animals/chihuahua.png',
+      image: '/images/animals/chihuahua.png',
       category: dogCategory,
       reviews: []
     },
@@ -52,7 +52,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       commonDisease: 'Psittacosis',
       countryOrigin: 'South America',
       history: 'Native to rainforest regions.',
-      urlImage: '/images/animals/macaw.png',
+      image: '/images/animals/macaw.png',
       category: birdCategory,
       reviews: []
     }
