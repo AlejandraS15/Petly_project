@@ -5,16 +5,16 @@ import DomesticAnimalCard from "@/components/DomesticAnimalCard.vue";
 
 // Props
 defineProps<{
-  pets: PetInterface[];
+  animals: PetInterface[];
 }>();
 </script>
 
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8">
     <DomesticAnimalCard 
-      v-for="pet in pets" 
-      :key="pet.id" 
-      :pet="pet" 
+        v-for="animal in animals" 
+        :key="animal.id" 
+        :pet="animal" 
     />
   </div>
   <div class="flex justify-center mt-8 mb-12">

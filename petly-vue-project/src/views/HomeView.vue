@@ -60,11 +60,10 @@ function handleCategorySelect(id: string): void {
   categoryStore.setSelectedCategory(id);
 }
 
-onMounted(async (): Promise<void> => {
-  // Inicializar datos (esto activará los seeders dentro de los stores/services)
-  await categoryStore.fetchCategories();
-  await animalStore.fetchAnimals();
-});
+onMounted(() => {
+  categoryStore.loadCategories()
+  animalStore.loadAnimals()
+})
 </script>
 
 <template>

@@ -1,1 +1,21 @@
 @import "tailwindcss";
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-primary-button);
+  transition: color 0.25s ease;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: var(--color-dashboard-highlight);
+  }
+}

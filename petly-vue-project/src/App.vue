@@ -61,9 +61,13 @@ onMounted(async () => {
     <!-- HEADER -->
     <header class="flex items-center justify-between py-6 border-b border-gray-200">
 
-      <h1 class="text-2xl font-black tracking-tight">
-        PETLY.CO
-      </h1>
+      <div class="flex items-center gap-4">
+        <img alt="Petly logo" class="logo" src="@/assets/logo.svg" width="50" height="50" />
+
+        <h1 class="text-2xl font-black tracking-tight">
+          PETLY.CO
+        </h1>
+      </div>
 
       <div class="w-96">
         <SearchBar @search="handleSearch" />
@@ -138,10 +142,8 @@ onMounted(async () => {
           </div>
         </div>
 
-
         <div>
           <h3 class="font-semibold mb-4">Company</h3>
-
           <ul class="space-y-2 text-sm text-gray-500">
             <li class="hover:text-black cursor-pointer">About</li>
             <li class="hover:text-black cursor-pointer">Features</li>
@@ -150,10 +152,8 @@ onMounted(async () => {
           </ul>
         </div>
 
-
         <div>
           <h3 class="font-semibold mb-4">Help</h3>
-
           <ul class="space-y-2 text-sm text-gray-500">
             <li class="hover:text-black cursor-pointer">Customer Support</li>
             <li class="hover:text-black cursor-pointer">My Account</li>
