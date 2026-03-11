@@ -1,134 +1,176 @@
 <script setup lang="ts">
 /**
  * HomeView.vue
- * Vista principal que coordina los stores de categorías y animales.
+ * Vista principal de la aplicación
  */
 
-// External
-import { onMounted, computed, ref } from "vue";
+import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
-// Internal
+// Components
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import DomesticAnimalGrid from "@/components/DomesticAnimalGrid.vue";
 import SearchBar from "@/components/SearchBar.vue";
+
+// Stores
 import { useCategoryStore } from "@/stores/categoryStore";
 import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore";
 
-// Variables
+// Stores instances
 const categoryStore = useCategoryStore();
 const animalStore = useDomesticAnimalStore();
 
-// Destructuring con storeToRefs para mantener reactividad
+// Reactive refs
 const { categories, selectedCategoryId } = storeToRefs(categoryStore);
-const { animals } = storeToRefs(animalStore);
+const { filteredAnimals } = storeToRefs(animalStore);
 
-// Reactive Variables
-const searchQuery = ref<string>("");
-
-// Selectors (Computed)
-/**
- * Filtra los animales basado en la categoría seleccionada y la búsqueda por nombre.
- */
-const filteredAnimals = computed(() => {
-  return animals.value.filter((animal) => {
-
-    const matchesCategory =
-      selectedCategoryId.value === "all" ||
-      animal.category.id === selectedCategoryId.value;
-
-    const matchesSearch = animal.breed
-      .toLowerCase()
-      .includes(searchQuery.value.toLowerCase());
-
-    return matchesCategory && matchesSearch;
-  });
-});
-
-// Functions
-/**
- * Actualiza el término de búsqueda.
- * @param query - El texto ingresado en el SearchBar
- */
-function handleSearch(query: string): void {
-  searchQuery.value = query;
+// Methods
+function handleSearch(query: string) {
+  animalStore.setSearch(query);
 }
 
-/**
- * Cambia la categoría activa en el store.
- * @param id - El ID de la categoría seleccionada
- */
-function handleCategorySelect(id: string): void {
-  categoryStore.setSelectedCategory(id);
+function handleCategorySelect(id: string) {
+  categoryStore.selectCategory(id);
 }
 
+// Lifecycle
 onMounted(() => {
-  categoryStore.loadCategories()
-  animalStore.loadAnimals()
-})
+  categoryStore.loadCategories();
+  animalStore.loadAnimals();
+});
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <!-- Header y Buscador -->
-    <header class="py-6 border-b border-gray-100 mb-8">
-      <SearchBar @search="handleSearch" />
+  <main class="max-w-7xl mx-auto px-6">
+
+    <!-- HEADER -->
+    <header class="flex items-center justify-between py-6 border-b border-gray-200">
+
+      <div class="flex items-center gap-4">
+        <img
+          src="@/assets/logo.svg"
+          alt="Petly logo"
+          width="50"
+          height="50"
+        />
+
+        <h1 class="text-2xl font-black tracking-tight">
+          PETLY.CO
+        </h1>
+      </div>
+
+      <div class="w-96">
+        <SearchBar @search="handleSearch" />
+      </div>
+
     </header>
 
-    <!-- Sección de Categorías -->
-    <section class="mb-12">
+    <!-- CATEGORIES -->
+    <section class="mt-10">
+
+      <div class="flex items-center justify-between mb-6">
+
+        <h2 class="text-xl font-bold">
+          Categories
+        </h2>
+
+        <button
+          class="bg-green-600 text-white text-sm px-4 py-1 rounded-full hover:bg-green-700 transition"
+        >
+          See all
+        </button>
+
+      </div>
+
       <CategoryFilter
-        :active-category-id="selectedCategoryId"
         :categories="categories"
+        :active-category="selectedCategoryId"
         @select="handleCategorySelect"
       />
+
     </section>
 
-    <!-- Cuadrícula de Animales -->
-    <section class="mb-20">
-      <DomesticAnimalGrid :animals="filteredAnimals" />
+    <!-- ANIMAL GRID -->
+    <section class="mt-12 mb-16">
+
+      <DomesticAnimalGrid
+        :animals="filteredAnimals"
+      />
+
     </section>
 
-    <!-- Footer según referencia visual -->
-    <footer class="border-t border-gray-200 py-16 bg-gray-50 -mx-4 sm:-mx-6 lg:-mx-8 px-8">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-        <div class="col-span-1 md:col-span-2">
-          <h2 class="text-2xl font-black tracking-tighter mb-4">PETLY.CO</h2>
-          <p class="text-gray-500 max-w-sm text-sm leading-relaxed">
-            Find what other people think about your pets and say something
-            about them too.
+    <!-- LOAD MORE -->
+    <div class="flex justify-center mb-20">
+
+      <button
+        class="border border-gray-300 px-6 py-2 rounded-full text-sm hover:bg-gray-100 transition"
+      >
+        Load More Pets
+      </button>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gray-200 pt-16 pb-10">
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+        <div class="md:col-span-2">
+
+          <h2 class="text-2xl font-black mb-4">
+            PETLY.CO
+          </h2>
+
+          <p class="text-gray-500 max-w-sm text-sm">
+            Find what other people think about your pets and say something about them too.
           </p>
-          <div class="flex space-x-4 mt-6 text-gray-400">
+
+          <div class="flex gap-4 mt-6 text-gray-400 text-sm">
             <span class="cursor-pointer hover:text-black">𝕏</span>
-            <span class="cursor-pointer hover:text-black">f</span>
-            <span class="cursor-pointer hover:text-black">i</span>
-            <span class="cursor-pointer hover:text-black">github</span>
+            <span class="cursor-pointer hover:text-black">Facebook</span>
+            <span class="cursor-pointer hover:text-black">Instagram</span>
+            <span class="cursor-pointer hover:text-black">GitHub</span>
           </div>
+
         </div>
 
         <div>
-          <h3 class="font-bold text-sm text-gray-900 mb-4">Company</h3>
-          <ul class="space-y-3 text-sm text-gray-500">
-            <li class="cursor-pointer hover:text-black">About</li>
-            <li class="cursor-pointer hover:text-black">Features</li>
-            <li class="cursor-pointer hover:text-black">Works</li>
-            <li class="cursor-pointer hover:text-black">Career</li>
+
+          <h3 class="font-semibold mb-4">
+            Company
+          </h3>
+
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="hover:text-black cursor-pointer">About</li>
+            <li class="hover:text-black cursor-pointer">Features</li>
+            <li class="hover:text-black cursor-pointer">Works</li>
+            <li class="hover:text-black cursor-pointer">Career</li>
           </ul>
+
         </div>
 
         <div>
-          <h3 class="font-bold text-sm text-gray-900 mb-4">Help</h3>
-          <ul class="space-y-3 text-sm text-gray-500">
-            <li class="cursor-pointer hover:text-black">Customer Support</li>
-            <li class="cursor-pointer hover:text-black">My Account</li>
-            <li class="cursor-pointer hover:text-black">Terms & Conditions</li>
-            <li class="cursor-pointer hover:text-black">Privacy Policy</li>
+
+          <h3 class="font-semibold mb-4">
+            Help
+          </h3>
+
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li class="hover:text-black cursor-pointer">Customer Support</li>
+            <li class="hover:text-black cursor-pointer">My Account</li>
+            <li class="hover:text-black cursor-pointer">Terms & Conditions</li>
+            <li class="hover:text-black cursor-pointer">Privacy Policy</li>
           </ul>
+
         </div>
+
       </div>
-      <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-gray-200">
-        <p class="text-xs text-gray-400">Petly 2024. All Rights Reserved</p>
+
+      <div class="border-t mt-10 pt-6 text-xs text-gray-400">
+        Petly 2024. All Rights Reserved
       </div>
+
     </footer>
-  </div>
+
+  </main>
 </template>

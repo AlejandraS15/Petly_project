@@ -16,7 +16,13 @@ export class DomesticAnimalService {
       return animals
     }
 
-    return JSON.parse(storedAnimals) as DomesticAnimalInterface[]
+    try {
+      return JSON.parse(storedAnimals) as DomesticAnimalInterface[]
+    } catch {
+      const animals = seedDomesticAnimals()
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(animals))
+      return animals
+    }
   }
 
   static filterByCategory(
@@ -27,6 +33,7 @@ export class DomesticAnimalService {
     return animals.filter(
       animal => animal.category.id === categoryId
     )
+
   }
 
   static searchAnimals(
@@ -39,6 +46,7 @@ export class DomesticAnimalService {
     return animals.filter(animal =>
       animal.breed.toLowerCase().includes(normalizedQuery)
     )
+
   }
 
 }

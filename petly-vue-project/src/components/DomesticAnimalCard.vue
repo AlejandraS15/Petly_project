@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { DomesticAnimalInterface } from "@/interfaces/domesticAnimalInterface"
+import type { DomesticAnimalInterface } from "@/interfaces/domesticAnimalInterface";
 
 defineProps<{
-  animals: DomesticAnimalInterface[];
+  pet: DomesticAnimalInterface;
 }>();
 </script>
 
@@ -14,18 +14,15 @@ defineProps<{
       <img
         :src="pet.image"
         :alt="pet.breed"
-        class="object-contain h-full"
+        class="object-contain h-full w-full"
       />
     </div>
 
-    <div class="mt-4">
+    <!-- Raza -->
+    <div class="mt-4 text-center">
       <h3 class="text-lg font-bold text-gray-800">
         {{ pet.breed }}
       </h3>
-
-      <p class="text-sm text-gray-500">
-        {{ pet.category.name }}
-      </p>
     </div>
 
   </div>

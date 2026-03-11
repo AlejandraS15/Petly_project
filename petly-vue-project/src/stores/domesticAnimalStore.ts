@@ -1,22 +1,17 @@
-// External imports
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-// Internal imports
 import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
 import { DomesticAnimalService } from '@/services/domesticAnimalService'
 import { useCategoryStore } from '@/stores/categoryStore'
 
 export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
 
-  // Stores
   const categoryStore = useCategoryStore()
 
-  // State
   const animals = ref<DomesticAnimalInterface[]>([])
   const searchQuery = ref<string>('')
 
-  // Actions
   function loadAnimals(): void {
     animals.value = DomesticAnimalService.getDomesticAnimals()
   }
@@ -25,13 +20,12 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     searchQuery.value = query
   }
 
-  // Computed
-  const filteredAnimals = computed((): DomesticAnimalInterface[] => {
+  const filteredAnimals = computed(() => {
 
     return animals.value.filter(animal => {
 
       const matchesCategory =
-        !categoryStore.selectedCategoryId ||
+        categoryStore.selectedCategoryId === 'all' ||
         animal.category.id === categoryStore.selectedCategoryId
 
       const matchesSearch =
@@ -40,11 +34,11 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
           .includes(searchQuery.value.toLowerCase())
 
       return matchesCategory && matchesSearch
+
     })
 
   })
 
-  // Exports
   return {
     animals,
     searchQuery,
