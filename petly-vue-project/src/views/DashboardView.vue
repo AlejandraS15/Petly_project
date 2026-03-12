@@ -1,10 +1,15 @@
 <script setup lang="ts">
 
+import { onMounted } from "vue"
+import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
+
 import StatsCards from "@/components/dashboard/StatsCards.vue"
-import AnimalsChart from "@/components/dashboard/AnimalsChart.vue"
-import RatingChart from "@/components/dashboard/RatingChart.vue"
-import UsersTable from "@/components/dashboard/UsersTable.vue"
-import AnimalsMap from "@/components/dashboard/AnimalsMap.vue"
+
+const animalStore = useDomesticAnimalStore()
+
+onMounted(() => {
+  animalStore.loadAnimals()
+})
 
 </script>
 
@@ -17,25 +22,6 @@ Admin Dashboard
 </h1>
 
 <StatsCards />
-
-<div class="grid grid-cols-2 gap-10 mt-10">
-
-<AnimalsChart />
-<RatingChart />
-
-</div>
-
-<div class="mt-10">
-
-<AnimalsMap />
-
-</div>
-
-<div class="mt-10">
-
-<UsersTable />
-
-</div>
 
 </div>
 
