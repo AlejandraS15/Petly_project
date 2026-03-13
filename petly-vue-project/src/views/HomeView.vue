@@ -8,8 +8,10 @@ import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 
 // Components
+import AppHeader from "@/components/AppHeader.vue";
 import CategoryFilter from "@/components/CategoryFilter.vue";
 import DomesticAnimalGrid from "@/components/DomesticAnimalGrid.vue";
+import HomeHero from "@/components/HomeHero.vue";
 import SearchBar from "@/components/SearchBar.vue";
 
 // Stores
@@ -43,27 +45,9 @@ onMounted(() => {
 <template>
   <main class="max-w-7xl mx-auto px-6">
 
-    <!-- HEADER -->
-    <header class="flex items-center justify-between py-6 border-b border-gray-200">
+    <AppHeader @search="handleSearch" />
 
-      <div class="flex items-center gap-4">
-        <img
-          src="@/assets/logo.svg"
-          alt="Petly logo"
-          width="50"
-          height="50"
-        />
-
-        <h1 class="text-2xl font-black tracking-tight">
-          PETLY.CO
-        </h1>
-      </div>
-
-      <div class="w-96">
-        <SearchBar @search="handleSearch" />
-      </div>
-
-    </header>
+    <HomeHero />
 
     <!-- CATEGORIES -->
     <section class="mt-10">
