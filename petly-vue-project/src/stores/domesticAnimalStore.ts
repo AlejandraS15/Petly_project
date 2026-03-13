@@ -20,7 +20,7 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     searchQuery.value = query
   }
 
-  function getAnimalById(id: string): DomesticAnimalInterface | undefined {
+  function getAnimalById(id: string) {
     return animals.value.find(animal => animal.id === id)
   }
 
