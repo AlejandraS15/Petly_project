@@ -9,9 +9,11 @@ import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 
 // Components
-import CategoryFilter from '@/components/CategoryFilter.vue'
-import DomesticAnimalGrid from '@/components/DomesticAnimalGrid.vue'
-import SearchBar from '@/components/SearchBar.vue'
+import AppHeader from "@/components/AppHeader.vue";
+import CategoryFilter from "@/components/CategoryFilter.vue";
+import DomesticAnimalGrid from "@/components/DomesticAnimalGrid.vue";
+import HomeHero from "@/components/HomeHero.vue";
+import SearchBar from "@/components/SearchBar.vue";
 
 // Stores
 import { useAuthStore } from '@/stores/authStore'
@@ -57,32 +59,10 @@ onMounted(() => {
 
 <template>
   <main class="max-w-7xl mx-auto px-6">
-    <!-- HEADER -->
-    <header class="flex items-center justify-between py-6 border-b border-gray-200">
-      <div class="flex items-center gap-4">
-        <img src="@/assets/logo.svg" alt="Petly logo" width="50" height="50" />
 
-        <h1 class="text-2xl font-black tracking-tight">PETLY.CO</h1>
-      </div>
+    <AppHeader @search="handleSearch" />
 
-      <div class="flex items-center gap-3">
-        <div class="w-52 md:w-96">
-          <SearchBar @search="handleSearch" />
-        </div>
-
-        <button
-          v-if="activeUser?.role === 'admin'"
-          class="btn-secondary px-3 py-2 text-xs md:text-sm"
-          @click="goToDashboard"
-        >
-          Dashboard
-        </button>
-
-        <button class="btn-primary px-3 py-2 text-xs md:text-sm" @click="handleLogout">
-          Logout
-        </button>
-      </div>
-    </header>
+    <HomeHero />
 
     <!-- CATEGORIES -->
     <section class="mt-10">

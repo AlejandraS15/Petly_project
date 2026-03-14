@@ -9,6 +9,7 @@ import HomeView from '@/views/HomeView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import PetDetailView from '@/views/PetDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -78,6 +79,27 @@ router.beforeEach((to) => {
   }
 
   return true
+  path: "/",
+  name: "home",
+  component: HomeView,
+  meta: {
+    title: "Home"
+  }
+},
+    {
+  path: "/dashboard",
+  name: "dashboard",
+  component: DashboardView,
+  meta: {
+    title: "Dashboard"
+  }
+},
+    {
+  path: "/pet/:id",
+  name: "petDetail",
+  component: PetDetailView
+}
+  ]
 })
 
 export default router

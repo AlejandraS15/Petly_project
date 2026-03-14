@@ -19,6 +19,10 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     searchQuery.value = query
   }
 
+  function getAnimalById(id: string) {
+    return animals.value.find(animal => animal.id === id)
+  }
+
   const filteredAnimals = computed(() => {
     return animals.value.filter((animal) => {
       const matchesCategory =
@@ -37,5 +41,6 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     filteredAnimals,
     loadAnimals,
     setSearch,
+    getAnimalById
   }
 })
