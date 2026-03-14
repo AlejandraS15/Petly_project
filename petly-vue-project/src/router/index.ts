@@ -20,7 +20,7 @@ const router = createRouter({
       component: HomeView,
       meta: {
         title: 'Petly | Home',
-        requiresAuth: true,
+        requiresAuth: false,
         requiresAdmin: false,
       },
     },
@@ -54,6 +54,17 @@ const router = createRouter({
         requiresAdmin: false,
       },
     },
+    {
+      path: '/pet/:id',
+      name: 'petDetail',
+      component: PetDetailView,
+      meta: {
+        title: 'Petly | Pet Detail',
+        requiresAuth: false,
+        requiresAdmin: false,
+      },
+    }
+
   ],
 })
 
@@ -79,27 +90,7 @@ router.beforeEach((to) => {
   }
 
   return true
-  path: "/",
-  name: "home",
-  component: HomeView,
-  meta: {
-    title: "Home"
-  }
-},
-    {
-  path: "/dashboard",
-  name: "dashboard",
-  component: DashboardView,
-  meta: {
-    title: "Dashboard"
-  }
-},
-    {
-  path: "/pet/:id",
-  name: "petDetail",
-  component: PetDetailView
-}
-  ]
+  
 })
 
 export default router

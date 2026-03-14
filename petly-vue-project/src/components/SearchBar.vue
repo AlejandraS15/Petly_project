@@ -17,8 +17,6 @@ function handleInput(): void {
 
 <template>
   <div class="flex items-center justify-between w-full py-4">
-    <h1 class="text-2xl font-bold tracking-tighter">PETLY.CO</h1>
-
     <div class="flex items-center gap-4">
       <div class="relative">
         <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
