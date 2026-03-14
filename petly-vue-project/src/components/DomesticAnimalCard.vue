@@ -20,11 +20,7 @@ function goToDetail(): void {
   >
     <!-- Imagen -->
     <div class="w-full h-56 flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden">
-      <img
-        :src="pet.image"
-        :alt="pet.breed"
-        class="object-contain h-full w-full"
-      />
+      <img :src="pet.image" :alt="pet.breed" class="object-contain h-full w-full" />
     </div>
 
     <!-- Raza -->
@@ -33,6 +29,5 @@ function goToDetail(): void {
         {{ pet.breed }}
       </h3>
     </div>
-
   </div>
 </template>

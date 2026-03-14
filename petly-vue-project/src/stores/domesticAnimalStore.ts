@@ -6,7 +6,6 @@ import { DomesticAnimalService } from '@/services/domesticAnimalService'
 import { useCategoryStore } from '@/stores/categoryStore'
 
 export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
-
   const categoryStore = useCategoryStore()
 
   const animals = ref<DomesticAnimalInterface[]>([])
@@ -25,22 +24,15 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   }
 
   const filteredAnimals = computed(() => {
-
-    return animals.value.filter(animal => {
-
+    return animals.value.filter((animal) => {
       const matchesCategory =
         categoryStore.selectedCategoryId === 'all' ||
         animal.category.id === categoryStore.selectedCategoryId
 
-      const matchesSearch =
-        animal.breed
-          .toLowerCase()
-          .includes(searchQuery.value.toLowerCase())
+      const matchesSearch = animal.breed.toLowerCase().includes(searchQuery.value.toLowerCase())
 
       return matchesCategory && matchesSearch
-
     })
-
   })
 
   return {
@@ -51,5 +43,4 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     setSearch,
     getAnimalById
   }
-
 })
