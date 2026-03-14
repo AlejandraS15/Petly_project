@@ -5,22 +5,22 @@ export function seedCategories(): CategoryInterface[] {
     {
       id: 'cat',
       species: 'Cats',
-      urlImage: '/images/categories/cat.png'
+      urlImage: '/images/categories/cat.png',
     },
     {
       id: 'dog',
       species: 'Dogs',
-      urlImage: '/images/categories/dog.png'
+      urlImage: '/images/categories/dog.png',
     },
     {
       id: 'bird',
       species: 'Birds',
-      urlImage: '/images/categories/bird.png'
+      urlImage: '/images/categories/bird.png',
     },
     {
       id: 'fish',
       species: 'Fish',
-      urlImage: '/images/categories/fish.png'
-    }
+      urlImage: '/images/categories/fish.png',
+    },
   ]
 }

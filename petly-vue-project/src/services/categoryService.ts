@@ -5,9 +5,7 @@ import { seedCategories } from '@/seeders/categorySeeder'
 const STORAGE_KEY = 'categories'
 
 export class CategoryService {
-
   static getCategories(): CategoryInterface[] {
-
     const storedCategories = localStorage.getItem(STORAGE_KEY)
 
     if (!storedCategories) {
@@ -18,5 +16,4 @@ export class CategoryService {
 
     return JSON.parse(storedCategories) as CategoryInterface[]
   }
-
 }

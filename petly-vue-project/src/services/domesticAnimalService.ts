@@ -5,9 +5,7 @@ import { seedDomesticAnimals } from '@/seeders/domesticAnimalSeeder'
 const STORAGE_KEY = 'domesticAnimals'
 
 export class DomesticAnimalService {
-
   static getDomesticAnimals(): DomesticAnimalInterface[] {
-
     const storedAnimals = localStorage.getItem(STORAGE_KEY)
 
     if (!storedAnimals) {
@@ -27,26 +25,17 @@ export class DomesticAnimalService {
 
   static filterByCategory(
     animals: DomesticAnimalInterface[],
-    categoryId: string
+    categoryId: string,
   ): DomesticAnimalInterface[] {
-
-    return animals.filter(
-      animal => animal.category.id === categoryId
-    )
-
+    return animals.filter((animal) => animal.category.id === categoryId)
   }
 
   static searchAnimals(
     animals: DomesticAnimalInterface[],
-    query: string
+    query: string,
   ): DomesticAnimalInterface[] {
-
     const normalizedQuery = query.toLowerCase()
 
-    return animals.filter(animal =>
-      animal.breed.toLowerCase().includes(normalizedQuery)
-    )
-
+    return animals.filter((animal) => animal.breed.toLowerCase().includes(normalizedQuery))
   }
-
 }
