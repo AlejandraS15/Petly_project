@@ -20,7 +20,7 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   }
 
   function getAnimalById(id: string) {
-    return animals.value.find(animal => animal.id === id)
+    return animals.value.find((animal) => animal.id === id)
   }
 
   const filteredAnimals = computed(() => {
@@ -41,6 +41,6 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     filteredAnimals,
     loadAnimals,
     setSearch,
-    getAnimalById
+    getAnimalById,
   }
 })

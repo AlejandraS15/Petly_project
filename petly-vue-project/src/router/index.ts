@@ -10,6 +10,7 @@ import DashboardView from '@/views/DashboardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import PetDetailView from '@/views/PetDetailView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -63,8 +64,17 @@ const router = createRouter({
         requiresAuth: false,
         requiresAdmin: false,
       },
-    }
-
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+      meta: {
+        title: 'Petly | Profile',
+        requiresAuth: true,
+        requiresAdmin: false,
+      },
+    },
   ],
 })
 
@@ -90,7 +100,6 @@ router.beforeEach((to) => {
   }
 
   return true
-  
 })
 
 export default router

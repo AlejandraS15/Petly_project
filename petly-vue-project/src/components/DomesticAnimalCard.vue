@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import type { DomesticAnimalInterface } from "@/interfaces/domesticAnimalInterface";
+import { useRouter } from 'vue-router'
+import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface;
-}>();
+  pet: DomesticAnimalInterface
+}>()
 
-const router = useRouter();
+const router = useRouter()
 
 function goToDetail(): void {
-  router.push(`/pet/${props.pet.id}`);
+  router.push(`/pet/${props.pet.id}`)
 }
 </script>
 

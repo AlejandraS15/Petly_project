@@ -4,18 +4,14 @@
  * Vista principal de la aplicación
  */
 
+// External imports
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRouter } from 'vue-router'
 
-// Components
-import AppHeader from "@/components/AppHeader.vue";
-import CategoryFilter from "@/components/CategoryFilter.vue";
-import DomesticAnimalGrid from "@/components/DomesticAnimalGrid.vue";
-import HomeHero from "@/components/HomeHero.vue";
-import SearchBar from "@/components/SearchBar.vue";
-
-// Stores
+// Internal imports
+import CategoryFilter from '@/components/CategoryFilter.vue'
+import DomesticAnimalGrid from '@/components/DomesticAnimalGrid.vue'
+import HomeHero from '@/components/HomeHero.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { useCategoryStore } from '@/stores/categoryStore'
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
@@ -24,29 +20,13 @@ import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 const authStore = useAuthStore()
 const categoryStore = useCategoryStore()
 const animalStore = useDomesticAnimalStore()
-const router = useRouter()
 
 // Reactive refs
-const { activeUser } = storeToRefs(authStore)
 const { categories, selectedCategoryId } = storeToRefs(categoryStore)
 const { filteredAnimals } = storeToRefs(animalStore)
 
-// Methods
-function handleSearch(query: string): void {
-  animalStore.setSearch(query)
-}
-
 function handleCategorySelect(id: string): void {
   categoryStore.selectCategory(id)
-}
-
-function goToDashboard(): void {
-  router.push({ name: 'dashboard' })
-}
-
-function handleLogout(): void {
-  authStore.logout()
-  router.push({ name: 'login' })
 }
 
 // Lifecycle
@@ -59,13 +39,10 @@ onMounted(() => {
 
 <template>
   <main class="max-w-7xl mx-auto px-6">
-
-    <AppHeader @search="handleSearch" />
-
     <HomeHero />
 
     <!-- CATEGORIES -->
-    <section class="mt-10">
+    <section id="categories-section" class="mt-10">
       <CategoryFilter
         :categories="categories"
         :active-category="selectedCategoryId ?? 'all'"

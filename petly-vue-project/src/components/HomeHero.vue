@@ -8,10 +8,8 @@
 
 <template>
   <section class="grid grid-cols-1 md:grid-cols-2 items-center gap-12 py-16">
-
     <!-- TEXTO -->
     <div>
-
       <h1 class="text-5xl font-black leading-tight">
         Discover Pet Breeds
         <br />
@@ -19,8 +17,8 @@
       </h1>
 
       <p class="mt-6 text-gray-500 max-w-md">
-        Learn about different types of dogs, cats, and other pets,
-        their characteristics, origins, and unique personalities.
+        Learn about different types of dogs, cats, and other pets, their characteristics, origins,
+        and unique personalities.
       </p>
 
       <button
@@ -31,7 +29,6 @@
 
       <!-- STATS -->
       <div class="flex gap-12 mt-12">
-
         <div>
           <p class="text-3xl font-bold">50+</p>
           <p class="text-gray-500 text-sm">Species</p>
@@ -46,21 +43,16 @@
           <p class="text-3xl font-bold">100+</p>
           <p class="text-gray-500 text-sm">Reviews</p>
         </div>
-
       </div>
-
     </div>
 
     <!-- IMAGEN -->
     <div class="flex justify-center">
-
       <img
         src="@/assets/pets-hero.png"
         alt="Pets illustration"
         class="max-h-[420px] object-contain"
       />
-
     </div>
-
   </section>
 </template>
