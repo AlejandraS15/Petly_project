@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandro Arrteaga
 
 import type { CreateUserDTO } from '@/dtos/auth/CreateUserDTO'
 

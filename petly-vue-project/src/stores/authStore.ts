@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandro Arteaga
 
 // External imports
 import { computed, ref } from 'vue'

@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandro Arteaga
 
 import type { UserInterface } from '@/interfaces/UserInterface'
 
