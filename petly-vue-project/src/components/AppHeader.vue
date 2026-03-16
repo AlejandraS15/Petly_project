@@ -1,8 +1,6 @@
 <script setup lang="ts">
 /**
  * Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
- * AppHeader.vue
- * Header principal de la aplicación
  */
 
 // Internal
