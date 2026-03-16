@@ -55,15 +55,9 @@ backgroundColor:"#6366f1"
 </script>
 
 <template>
+  <div class="bg-white shadow rounded-xl p-6">
+    <h3 class="font-bold mb-4">Top Rated Animals</h3>
 
-<div class="bg-white shadow rounded-xl p-6">
-
-<h3 class="font-bold mb-4">
-Top Rated Animals
-</h3>
-
-<Bar :data="chartData" />
-
-</div>
-
+    <Bar :data="chartData" />
+  </div>
 </template>
