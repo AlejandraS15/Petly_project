@@ -1,42 +1,63 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 
-import { useAuthStore } from '@/stores/authStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+// Vue
+import { onMounted } from "vue"
 
-import StatsCards from '@/components/dashboard/StatsCards.vue'
+// Stores
+import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
+import { useReviewStore } from "@/stores/reviewStore"
 
-const authStore = useAuthStore()
+// Components
+import StatsCards from "@/components/dashboard/StatsCards.vue"
+import RatingChart from "@/components/dashboard/RatingChart.vue"
+import AnimalsMap from "@/components/dashboard/AnimalsMap.vue"
+import UsersTable from "@/components/dashboard/UsersTable.vue"
+
+
+// Store instances
 const animalStore = useDomesticAnimalStore()
-const router = useRouter()
+const reviewStore = useReviewStore()
 
-function goToHome(): void {
-  router.push({ name: 'home' })
-}
-
-function handleLogout(): void {
-  authStore.logout()
-  router.push({ name: 'login' })
-}
-
+// Load data when dashboard loads
 onMounted(() => {
-  authStore.initializeAuth()
+
   animalStore.loadAnimals()
+  reviewStore.loadReviews()
+
 })
+
 </script>
 
+
 <template>
-  <div class="max-w-7xl mx-auto px-8 py-10">
-    <header class="mb-10 flex flex-wrap items-center justify-between gap-3">
-      <h1 class="text-3xl font-bold">Admin Dashboard</h1>
 
-      <div class="flex gap-2">
-        <button class="btn-secondary px-4 py-2 text-sm" @click="goToHome">Home</button>
-        <button class="btn-primary px-4 py-2 text-sm" @click="handleLogout">Logout</button>
-      </div>
-    </header>
+<div class="max-w-7xl mx-auto px-8 py-10">
 
-    <StatsCards />
+  <h1 class="text-3xl font-bold mb-10">
+    Admin Dashboard
+  </h1>
+
+  <!-- Stats -->
+  <StatsCards />
+
+  <!-- Charts -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+
+    <RatingChart />
+
   </div>
+
+  <!-- Map -->
+  <div class="mt-10">
+
+    <AnimalsMap />
+
+  </div>
+
+  <div class="mt-10">
+    <UsersTable />
+  </div>
+
+</div>
+
 </template>
