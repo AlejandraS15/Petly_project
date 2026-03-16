@@ -11,6 +11,8 @@ import { useReviewStore } from "@/stores/reviewStore"
 import StatsCards from "@/components/dashboard/StatsCards.vue"
 import RatingChart from "@/components/dashboard/RatingChart.vue"
 import AnimalsMap from "@/components/dashboard/AnimalsMap.vue"
+import UsersTable from "@/components/dashboard/UsersTable.vue"
+
 
 // Store instances
 const animalStore = useDomesticAnimalStore()
@@ -50,6 +52,10 @@ onMounted(() => {
 
     <AnimalsMap />
 
+  </div>
+
+  <div class="mt-10">
+    <UsersTable />
   </div>
 
 </div>
