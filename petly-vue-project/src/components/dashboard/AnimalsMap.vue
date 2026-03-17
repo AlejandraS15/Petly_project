@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
@@ -18,18 +18,35 @@ L.Icon.Default.mergeOptions({
 const animalStore = useDomesticAnimalStore()
 const { animals } = storeToRefs(animalStore)
 
+onMounted(() => {
+  animalStore.loadAnimals()
+  console.log("ANIMALS:", animals.value)
+})
+
 const countryCoordinates: Record<string, { lat: number; lng: number }> = {
   Iran: { lat: 32.4279, lng: 53.688 },
   Mexico: { lat: 23.6345, lng: -102.5528 },
-  "South America": { lat: -15, lng: -60 }
+  "South America": { lat: -15, lng: -60 },
+  Colombia: { lat: 4.5709, lng: -74.2973 },
+
+  Scotland: { lat: 56.4907, lng: -4.2026 },
+  "Canary Islands": { lat: 28.2916, lng: -16.6291 },
+  Netherlands: { lat: 52.1326, lng: 5.2913 },
+  Syria: { lat: 34.8021, lng: 38.9968 }
 }
 
 const animalLocations = computed(() => {
   return animals.value
     .map((animal) => {
-      const coords = countryCoordinates[animal.countryOrigin]
 
-      if (!coords) return null
+      const country = animal.countryOrigin.trim()
+
+      const coords = countryCoordinates[country]
+
+      if (!coords) {
+        console.warn("No encontrado:", country)
+        return null
+      }
 
       return {
         breed: animal.breed,
@@ -37,11 +54,7 @@ const animalLocations = computed(() => {
         lng: coords.lng,
       }
     })
-    .filter((a) => a !== null) as {
-      breed: string
-      lat: number
-      lng: number
-    }[]
+    .filter((a) => a !== null)
 })
 </script>
 
@@ -64,9 +77,9 @@ url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 />
 
 <LMarker
-v-for="(animal, i) in animalLocations"
-:key="i"
-:lat-lng="[animal.lat, animal.lng]"
+  v-for="animal in animalLocations"
+  :key="animal.breed + animal.lat"
+  :lat-lng="[animal.lat, animal.lng]"
 >
 
 <LPopup>

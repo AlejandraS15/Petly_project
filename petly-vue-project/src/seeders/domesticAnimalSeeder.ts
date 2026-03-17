@@ -38,7 +38,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       height: '15-23 cm',
       behaviours: 'Alert and loyal',
       commonDisease: 'Patellar luxation',
-      countryOrigin: 'Mexico',
+      countryOrigin: 'Colombia',
       history: 'Descendant of the Techichi dog.',
       image: '/images/animals/chihuahua.png',
       category: dogCategory,
