@@ -5,11 +5,14 @@ import { Chart, CategoryScale, LinearScale, BarElement } from 'chart.js'
 import { storeToRefs } from 'pinia'
 
 import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
+import { useReviewStore } from "@/stores/reviewStore"
 
 Chart.register(CategoryScale, LinearScale, BarElement)
 
 // Stores
 const animalStore = useDomesticAnimalStore()
+const reviewStore = useReviewStore()
+
 const { animals } = storeToRefs(animalStore)
 
 // calcular promedio de rating por animal

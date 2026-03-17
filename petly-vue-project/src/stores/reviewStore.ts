@@ -1,10 +1,11 @@
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from "vue"
+import { defineStore } from "pinia"
 
-import type { ReviewInterface } from '@/interfaces/reviewInterface'
-import { ReviewService } from '@/services/ReviewService'
+import type { ReviewInterface } from "@/interfaces/reviewInterface"
+import { ReviewService } from "@/services/reviewService"
 
-export const useReviewStore = defineStore('review', () => {
+export const useReviewStore = defineStore("review", () => {
+
   const reviews = ref<ReviewInterface[]>([])
 
   function loadReviews(): void {
