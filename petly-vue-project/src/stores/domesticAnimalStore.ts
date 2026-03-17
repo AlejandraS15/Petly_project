@@ -54,6 +54,7 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     }
 
     return success
+  }
   function addReview(animalId: string, review: ReviewInterface): void {
     const animal = animals.value.find((a) => a.id === animalId)
 

@@ -4,11 +4,6 @@ import { Bar } from 'vue-chartjs'
 import { Chart, CategoryScale, LinearScale, BarElement } from 'chart.js'
 import { storeToRefs } from 'pinia'
 
-import { computed } from "vue"
-import { Bar } from "vue-chartjs"
-import { Chart, CategoryScale, LinearScale, BarElement } from "chart.js"
-import { storeToRefs } from "pinia"
-
 import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
 
 Chart.register(CategoryScale, LinearScale, BarElement)
