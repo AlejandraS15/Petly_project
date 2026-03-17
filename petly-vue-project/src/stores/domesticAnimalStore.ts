@@ -1,6 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
+import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
+import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimalDTO'
 import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
 import { DomesticAnimalService } from '@/services/domesticAnimalService'
 import { useCategoryStore } from '@/stores/categoryStore'
@@ -19,8 +21,38 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     searchQuery.value = query
   }
 
-  function getAnimalById(id: string) {
+  function getAnimalById(id: string): DomesticAnimalInterface | undefined {
     return animals.value.find((animal) => animal.id === id)
+  }
+
+  function createAnimal(dto: CreateDomesticAnimalDTO): DomesticAnimalInterface | null {
+    const created = DomesticAnimalService.createAnimal(dto)
+
+    if (created) {
+      animals.value = [...animals.value, created]
+    }
+
+    return created
+  }
+
+  function updateAnimal(id: string, dto: UpdateDomesticAnimalDTO): DomesticAnimalInterface | null {
+    const updated = DomesticAnimalService.updateAnimal(id, dto)
+
+    if (updated) {
+      animals.value = animals.value.map((a) => (a.id === id ? updated : a))
+    }
+
+    return updated
+  }
+
+  function deleteAnimal(id: string): boolean {
+    const success = DomesticAnimalService.deleteAnimal(id)
+
+    if (success) {
+      animals.value = animals.value.filter((a) => a.id !== id)
+    }
+
+    return success
   }
 
   const filteredAnimals = computed(() => {
@@ -42,5 +74,8 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     loadAnimals,
     setSearch,
     getAnimalById,
+    createAnimal,
+    updateAnimal,
+    deleteAnimal,
   }
 })
