@@ -1,23 +1,127 @@
+// Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
+
+// External imports
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+// Internal imports
+import { AuthService } from '@/services/AuthService'
+import HomeView from '@/views/HomeView.vue'
+import DashboardView from '@/views/DashboardView.vue'
+import LoginView from '@/views/LoginView.vue'
+import RegisterView from '@/views/RegisterView.vue'
+import PetAdminDetailView from '@/views/PetAdminDetailView.vue'
+import PetDetailView from '@/views/PetDetailView.vue'
+import PetFormView from '@/views/PetFormView.vue'
+import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        title: 'Petly | Home',
+        requiresAuth: false,
+        requiresAdmin: false,
+      },
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView,
+      meta: {
+        title: 'Petly | Dashboard',
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+      meta: {
+        title: 'Petly | Login',
+        requiresAuth: false,
+        requiresAdmin: false,
+      },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
+      meta: {
+        title: 'Petly | Register',
+        requiresAuth: false,
+        requiresAdmin: false,
+      },
+    },
+    {
+      path: '/pet/:id',
+      name: 'petDetail',
+      component: PetDetailView,
+      meta: {
+        title: 'Petly | Pet Detail',
+        requiresAuth: false,
+        requiresAdmin: false,
+      },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: ProfileView,
+      meta: {
+        title: 'Petly | Profile',
+        requiresAuth: true,
+        requiresAdmin: false,
+      },
+    },
+    {
+      path: '/admin/pet/new',
+      name: 'petNew',
+      component: PetFormView,
+      meta: {
+        title: 'Petly | New Animal',
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
+    {
+      path: '/admin/pet/:id',
+      name: 'petAdminDetail',
+      component: PetAdminDetailView,
+      meta: {
+        title: 'Petly | Admin Animal Detail',
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
     },
   ],
+})
+
+router.beforeEach((to) => {
+  document.title = String(to.meta.title ?? 'Petly')
+
+  const isLoggedIn = AuthService.isAuthenticated()
+  const activeUser = AuthService.getActiveUser()
+  const requiresAuth = Boolean(to.meta.requiresAuth)
+  const requiresAdmin = Boolean(to.meta.requiresAdmin)
+  const isAuthPage = to.name === 'login' || to.name === 'register'
+
+  if (requiresAuth && !isLoggedIn) {
+    return { name: 'login' }
+  }
+
+  if (requiresAdmin && activeUser?.role !== 'admin') {
+    return { name: 'home' }
+  }
+
+  if (isAuthPage && isLoggedIn) {
+    return { name: activeUser?.role === 'admin' ? 'dashboard' : 'home' }
+  }
+
+  return true
 })
 
 export default router
