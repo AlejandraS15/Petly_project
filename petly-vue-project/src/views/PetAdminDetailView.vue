@@ -6,7 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 import { useCategoryStore } from '@/stores/categoryStore'
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 

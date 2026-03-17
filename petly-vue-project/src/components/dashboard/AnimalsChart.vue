@@ -1,9 +1,12 @@
 <script setup lang="ts">
+// External imports
 import { computed } from 'vue'
 import { Pie } from 'vue-chartjs'
-import { Chart, ArcElement, Tooltip, Legend } from 'chart.js'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import { ArcElement, Chart, Legend, Tooltip } from 'chart.js'
 import { storeToRefs } from 'pinia'
+
+// Internal imports
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
 Chart.register(ArcElement, Tooltip, Legend)
 

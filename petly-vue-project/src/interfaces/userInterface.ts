@@ -1,4 +1,5 @@
 // Autor: Alejandro Arteaga
+
 export interface UserInterface {
   id: string
   fullName: string

@@ -1,8 +1,9 @@
-import type { ReviewInterface } from '@/interfaces/reviewInterface'
+// Autor: Nombre Apellido
+
+import type { ReviewInterface } from '@/interfaces/ReviewInterface'
 
 export function seedReviews(): ReviewInterface[] {
   return [
-
     //  Persian (1)
     {
       id: 'r1',
@@ -10,7 +11,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Super calm and beautiful cat.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '1'
+      domesticAnimalId: '1',
     },
     {
       id: 'r2',
@@ -18,7 +19,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very elegant but needs grooming.',
       postDate: new Date(),
       userId: 'u2',
-      domesticAnimalId: '1'
+      domesticAnimalId: '1',
     },
 
     //  Chihuahua (2)
@@ -28,7 +29,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very energetic and loyal.',
       postDate: new Date(),
       userId: 'u3',
-      domesticAnimalId: '2'
+      domesticAnimalId: '2',
     },
     {
       id: 'r4',
@@ -36,7 +37,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Cute but barks a lot.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '2'
+      domesticAnimalId: '2',
     },
 
     //  Macaw (3)
@@ -46,7 +47,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Amazing colors and very smart.',
       postDate: new Date(),
       userId: 'u2',
-      domesticAnimalId: '3'
+      domesticAnimalId: '3',
     },
     {
       id: 'r6',
@@ -54,7 +55,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Needs a lot of attention.',
       postDate: new Date(),
       userId: 'u3',
-      domesticAnimalId: '3'
+      domesticAnimalId: '3',
     },
 
     //  Himalayan (4)
@@ -64,7 +65,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very affectionate and calm.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '4'
+      domesticAnimalId: '4',
     },
     {
       id: 'r8',
@@ -72,7 +73,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Beautiful eyes, very friendly.',
       postDate: new Date(),
       userId: 'u2',
-      domesticAnimalId: '4'
+      domesticAnimalId: '4',
     },
 
     //  Golden Retriever (5)
@@ -82,7 +83,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Best family dog ever.',
       postDate: new Date(),
       userId: 'u3',
-      domesticAnimalId: '5'
+      domesticAnimalId: '5',
     },
     {
       id: 'r10',
@@ -90,7 +91,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very loyal and intelligent.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '5'
+      domesticAnimalId: '5',
     },
 
     //  Canary (6)
@@ -100,7 +101,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Lovely singing bird.',
       postDate: new Date(),
       userId: 'u2',
-      domesticAnimalId: '6'
+      domesticAnimalId: '6',
     },
     {
       id: 'r12',
@@ -108,7 +109,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Nice but a bit noisy.',
       postDate: new Date(),
       userId: 'u3',
-      domesticAnimalId: '6'
+      domesticAnimalId: '6',
     },
 
     //  Netherland Dwarf (7)
@@ -118,7 +119,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very cute and small.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '7'
+      domesticAnimalId: '7',
     },
     {
       id: 'r14',
@@ -126,7 +127,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'A bit shy but playful.',
       postDate: new Date(),
       userId: 'u2',
-      domesticAnimalId: '7'
+      domesticAnimalId: '7',
     },
 
     //  Syrian Hamster (8)
@@ -136,7 +137,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Easy to take care of.',
       postDate: new Date(),
       userId: 'u3',
-      domesticAnimalId: '8'
+      domesticAnimalId: '8',
     },
     {
       id: 'r16',
@@ -144,8 +145,7 @@ export function seedReviews(): ReviewInterface[] {
       comment: 'Very active at night.',
       postDate: new Date(),
       userId: 'u1',
-      domesticAnimalId: '8'
-    }
-
+      domesticAnimalId: '8',
+    },
   ]
 }

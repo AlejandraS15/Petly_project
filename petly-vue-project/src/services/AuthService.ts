@@ -1,5 +1,7 @@
 // Autor: Alejandro Arteaga
 
+// Autor: Alejandro Arteaga
+
 // Internal imports
 import type { CreateUserDTO } from '@/dtos/auth/CreateUserDTO'
 import type { LoginDTO } from '@/dtos/auth/LoginDTO'

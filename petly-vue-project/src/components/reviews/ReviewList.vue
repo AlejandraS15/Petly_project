@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { ReviewInterface } from '@/interfaces/reviewInterface'
-import ReviewCard from './ReviewCard.vue'
+// Internal imports
+import type { ReviewInterface } from '@/interfaces/ReviewInterface'
+import ReviewCard from '@/components/reviews/ReviewCard.vue'
 
 defineProps<{
   reviews: ReviewInterface[]
@@ -9,12 +10,6 @@ defineProps<{
 
 <template>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-    <ReviewCard
-      v-for="review in reviews"
-      :key="review.id"
-      :review="review"
-    />
-
+    <ReviewCard v-for="review in reviews" :key="review.id" :review="review" />
   </div>
 </template>

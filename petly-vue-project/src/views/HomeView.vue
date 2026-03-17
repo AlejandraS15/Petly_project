@@ -1,8 +1,5 @@
 <script setup lang="ts">
-/**
- * HomeView.vue
- * Vista principal de la aplicación
- */
+// Autor: Nombre Apellido
 
 // External imports
 import { onMounted } from 'vue'

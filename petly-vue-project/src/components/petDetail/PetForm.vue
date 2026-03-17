@@ -5,7 +5,7 @@
 import { reactive, watch } from 'vue'
 
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/categoryInterface'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface'
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
 
 const props = defineProps<{

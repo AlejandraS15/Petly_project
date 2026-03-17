@@ -1,6 +1,9 @@
 <script setup lang="ts">
+// External imports
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
+
+// Internal imports
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
 const animalStore = useDomesticAnimalStore()

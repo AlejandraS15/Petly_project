@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// Types
-import type { CategoryInterface } from '@/interfaces/categoryInterface'
+// Internal imports
+import type { CategoryInterface } from '@/interfaces/CategoryInterface'
 
 // Props
 defineProps<{

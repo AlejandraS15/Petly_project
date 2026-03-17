@@ -1,14 +1,36 @@
 <script setup lang="ts">
-/**
- * PetStatsTable.vue
- * Tabla de información del animal
- */
+// External imports
+import { computed } from 'vue'
 
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+// Internal imports
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 
-defineProps<{
+const props = defineProps<{
   pet: DomesticAnimalInterface
 }>()
+
+const sizeLabel = computed<string>(() => {
+  const weightMatches = props.pet.weight.match(/\d+(?:\.\d+)?/g)
+
+  if (!weightMatches || weightMatches.length === 0) {
+    return 'Unknown'
+  }
+
+  const numericWeights = weightMatches.map((value) => Number(value))
+  const averageWeight =
+    numericWeights.reduce((accumulator, current) => accumulator + current, 0) /
+    numericWeights.length
+
+  if (averageWeight < 5) {
+    return 'Small'
+  }
+
+  if (averageWeight <= 20) {
+    return 'Medium'
+  }
+
+  return 'Large'
+})
 </script>
 
 <template>
@@ -24,7 +46,7 @@ defineProps<{
       <div class="p-3">{{ pet.lifeExpectancy }}</div>
       <div class="p-3">{{ pet.weight }}</div>
       <div class="p-3">{{ pet.height }}</div>
-      <div class="p-3">Small</div>
+      <div class="p-3">{{ sizeLabel }}</div>
     </div>
   </div>
 </template>

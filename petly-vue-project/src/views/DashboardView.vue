@@ -1,30 +1,18 @@
 <script setup lang="ts">
-// Vue
+// External imports
 import { onMounted } from 'vue'
 
-// Stores
-import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
-import { useReviewStore } from "@/stores/reviewStore"
-
-// Components
-// Components
-import AnimalsChart from "@/components/dashboard/AnimalsChart.vue"
-import AnimalsMap from "@/components/dashboard/AnimalsMap.vue"
+// Internal imports
+import AnimalsMap from '@/components/dashboard/AnimalsMap.vue'
 import RatingChart from '@/components/dashboard/RatingChart.vue'
-import StatsCards from "@/components/dashboard/StatsCards.vue"
-import UsersTable from "@/components/dashboard/UsersTable.vue"
+import StatsCards from '@/components/dashboard/StatsCards.vue'
+import UsersTable from '@/components/dashboard/UsersTable.vue'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
-
-// Store instances
 const animalStore = useDomesticAnimalStore()
-const reviewStore = useReviewStore()
 
-// Load data when dashboard loads
 onMounted(() => {
   animalStore.loadAnimals()
-
-  reviewStore.loadReviews()
-
 })
 </script>
 

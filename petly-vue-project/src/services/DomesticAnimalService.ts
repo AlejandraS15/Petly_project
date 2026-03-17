@@ -1,9 +1,13 @@
+// Autor: Nombre Apellido
+
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
+import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO'
 import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimalDTO'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import type { ReviewInterface } from '@/interfaces/ReviewInterface'
 import { seedDomesticAnimals } from '@/seeders/domesticAnimalSeeder'
-import { CategoryService } from '@/services/categoryService'
+import { CategoryService } from '@/services/CategoryService'
 
 const STORAGE_KEY = 'domesticAnimals'
 
@@ -119,5 +123,24 @@ export class DomesticAnimalService {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered))
 
     return true
+  }
+
+  static addReview(animalId: string, dto: CreateReviewDTO): ReviewInterface | null {
+    const animals = this.getDomesticAnimals()
+    const animal = animals.find((a) => a.id === animalId)
+
+    if (!animal) {
+      return null
+    }
+
+    const newReview: ReviewInterface = {
+      id: crypto.randomUUID(),
+      ...dto,
+    }
+
+    animal.reviews.push(newReview)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(animals))
+
+    return newReview
   }
 }

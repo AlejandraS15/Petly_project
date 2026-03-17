@@ -1,55 +1,38 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+// External imports
+import { computed, onMounted, ref } from 'vue'
 
-const users = ref([
-  { id: 1, name: 'Ana', email: 'ana@mail.com' },
-  { id: 2, name: 'Luis', email: 'luis@mail.com' },
-  { id: 3, name: 'Pedro', email: 'pedro@mail.com' },
-  { id: 4, name: 'Maria', email: 'maria@mail.com' },
-  { id: 5, name: 'Carlos', email: 'carlos@mail.com' },
-  { id: 6, name: 'Lucia', email: 'lucia@mail.com' },
-  { id: 7, name: 'Juan', email: 'juan@mail.com' },
-  { id: 8, name: 'Laura', email: 'laura@mail.com' },
-  { id: 9, name: 'Diego', email: 'diego@mail.com' },
-  { id: 10, name: 'Sara', email: 'sara@mail.com' },
-  { id: 11, name: 'Camilo', email: 'camilo@mail.com' },
-  { id: 12, name: 'Elena', email: 'elena@mail.com' },
-])
+// Internal imports
+import type { UserInterface } from '@/interfaces/UserInterface'
+import { AuthService } from '@/services/AuthService'
 
-const pageSize = ref(10)
-const currentPage = ref(1)
+const users = ref<UserInterface[]>([])
+const pageSize = ref<number>(10)
+const currentPage = ref<number>(1)
 
-/*
-Total páginas
-*/
-const totalPages = computed(() => {
-  return Math.ceil(users.value.length / pageSize.value)
-})
+const totalPages = computed(() => Math.ceil(users.value.length / pageSize.value))
 
-/*
-Usuarios paginados
-*/
 const paginatedUsers = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value
   const end = start + pageSize.value
-
   return users.value.slice(start, end)
 })
 
-/*
-Cambiar página
-*/
-function nextPage() {
+function nextPage(): void {
   if (currentPage.value < totalPages.value) {
     currentPage.value++
   }
 }
 
-function prevPage() {
+function prevPage(): void {
   if (currentPage.value > 1) {
     currentPage.value--
   }
 }
+
+onMounted(() => {
+  users.value = AuthService.getUsers()
+})
 </script>
 
 <template>
@@ -81,7 +64,7 @@ function prevPage() {
       <tbody>
         <tr v-for="u in paginatedUsers" :key="u.id" class="border-b hover:bg-gray-50">
           <td class="py-2">{{ u.id }}</td>
-          <td>{{ u.name }}</td>
+          <td>{{ u.fullName }}</td>
           <td>{{ u.email }}</td>
         </tr>
       </tbody>

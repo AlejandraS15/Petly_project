@@ -1,27 +1,25 @@
 <script setup lang="ts">
+// External imports
 import { ref } from 'vue'
-import { useAuthStore } from '@/stores/authStore'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
 
-import ReviewList from './ReviewList.vue'
-import ReviewForm from './ReviewForm.vue'
-import RatingChart from '@/components/dashboard/RatingChart.vue'
+// Internal imports
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import ReviewForm from '@/components/reviews/ReviewForm.vue'
+import ReviewList from '@/components/reviews/ReviewList.vue'
+import { useAuthStore } from '@/stores/authStore'
 
 defineProps<{
   pet: DomesticAnimalInterface
 }>()
 
 const authStore = useAuthStore()
-const showForm = ref(false)
+const showForm = ref<boolean>(false)
 </script>
 
 <template>
   <section class="mt-20">
-
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-xl font-semibold">
-        Rating & Reviews
-      </h2>
+      <h2 class="text-xl font-semibold">Rating & Reviews</h2>
 
       <button
         v-if="authStore.isAuthenticated"
@@ -34,18 +32,6 @@ const showForm = ref(false)
 
     <ReviewList :reviews="pet.reviews" />
 
-    <ReviewForm
-      v-if="showForm"
-      :animalId="pet.id"
-      @close="showForm = false"
-    />
-
-    <!-- reutilizamos el gráfico del dashboard -->
-    <div class="mt-16">
-
-        <RatingChart />
-
-    </div>
-
+    <ReviewForm v-if="showForm" :animalId="pet.id" @close="showForm = false" />
   </section>
 </template>

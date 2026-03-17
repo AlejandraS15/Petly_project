@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/categoryInterface'
-import { CategoryService } from '@/services/categoryService'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface'
+import { CategoryService } from '@/services/CategoryService'
 
 export const useCategoryStore = defineStore('category', () => {
   // Reactive Variables

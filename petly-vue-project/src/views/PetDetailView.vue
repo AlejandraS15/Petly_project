@@ -5,18 +5,18 @@
  */
 
 import { onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { useRoute, useRouter } from 'vue-router'
 
-import { useAuthStore } from '@/stores/authStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
-
+// Internal imports
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import PetAccordion from '@/components/petDetail/PetAccordion.vue'
 import PetImageGallery from '@/components/petDetail/PetImageGallery.vue'
 import PetInfoSection from '@/components/petDetail/PetInfoSection.vue'
 import PetStatsTable from '@/components/petDetail/PetStatsTable.vue'
-import PetAccordion from '@/components/petDetail/PetAccordion.vue'
 import ReviewsSection from '@/components/reviews/ReviewsSection.vue'
+import { useAuthStore } from '@/stores/authStore'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
 const route = useRoute()
 const router = useRouter()

@@ -1,3 +1,5 @@
+// Autor: Nombre Apellido
+
 export interface ReviewInterface {
   id: string
   rating: number

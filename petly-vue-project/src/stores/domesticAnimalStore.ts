@@ -1,11 +1,13 @@
-import { ref, computed } from 'vue'
+// External imports
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
+// Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
+import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO'
 import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimalDTO'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
-import { DomesticAnimalService } from '@/services/domesticAnimalService'
-import type { ReviewInterface } from '@/interfaces/reviewInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import { DomesticAnimalService } from '@/services/DomesticAnimalService'
 import { useCategoryStore } from '@/stores/categoryStore'
 
 export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
@@ -55,14 +57,32 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
 
     return success
   }
-  function addReview(animalId: string, review: ReviewInterface): void {
+  function addReview(animalId: string, dto: CreateReviewDTO): void {
+    const added = DomesticAnimalService.addReview(animalId, dto)
+
+    if (!added) return
+
     const animal = animals.value.find((a) => a.id === animalId)
 
-    if (!animal) return
+    if (animal) {
+      animal.reviews.push(added)
+    }
+  }
 
-    animal.reviews.push(review)
+  function getReviewsByAnimal(animalId: string): DomesticAnimalInterface['reviews'] {
+    const animal = animals.value.find((currentAnimal) => currentAnimal.id === animalId)
+    return animal ? animal.reviews : []
+  }
 
-    localStorage.setItem('domesticAnimals', JSON.stringify(animals.value))
+  function getAverageRating(animalId: string): number {
+    const reviews = getReviewsByAnimal(animalId)
+
+    if (reviews.length === 0) {
+      return 0
+    }
+
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0)
+    return totalRating / reviews.length
   }
 
   const filteredAnimals = computed(() => {
@@ -88,5 +108,7 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     updateAnimal,
     deleteAnimal,
     addReview,
+    getReviewsByAnimal,
+    getAverageRating,
   }
 })

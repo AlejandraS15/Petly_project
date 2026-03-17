@@ -1,7 +1,5 @@
 <script setup lang="ts">
-/**
- * Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
- */
+// Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
 
 // External imports
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'

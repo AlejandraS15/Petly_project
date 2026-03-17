@@ -1,6 +1,8 @@
+// Autor: Nombre Apellido
+
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/categoryInterface'
-import type { ReviewInterface } from '@/interfaces/reviewInterface'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface'
+import type { ReviewInterface } from '@/interfaces/ReviewInterface'
 
 export interface DomesticAnimalInterface {
   id: string

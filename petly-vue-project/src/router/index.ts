@@ -1,6 +1,4 @@
-/**
- * Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
- */
+// Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
 
 // External imports
 import { createRouter, createWebHistory } from 'vue-router'

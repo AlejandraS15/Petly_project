@@ -1,6 +1,10 @@
 <script setup lang="ts">
+// External imports
 import { useRouter } from 'vue-router'
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+
+// Internal imports
+import defaultImage from '@/assets/default.jpg'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 
 const props = defineProps<{
   pet: DomesticAnimalInterface
@@ -9,7 +13,15 @@ const props = defineProps<{
 const router = useRouter()
 
 function goToDetail(): void {
-  router.push(`/pet/${props.pet.id}`)
+  router.push({ name: 'petDetail', params: { id: props.pet.id } })
+}
+
+function handleImageError(event: Event): void {
+  const imageElement = event.target as HTMLImageElement
+
+  if (imageElement.src !== defaultImage) {
+    imageElement.src = defaultImage
+  }
 }
 </script>
 
@@ -20,7 +32,12 @@ function goToDetail(): void {
   >
     <!-- Imagen -->
     <div class="w-full h-56 flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden">
-      <img :src="pet.image" :alt="pet.breed" class="object-contain h-full w-full" />
+      <img
+        :src="pet.image"
+        :alt="pet.breed"
+        class="object-contain h-full w-full"
+        @error="handleImageError"
+      />
     </div>
 
     <!-- Raza -->

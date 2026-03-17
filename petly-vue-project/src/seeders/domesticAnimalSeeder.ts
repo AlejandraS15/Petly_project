@@ -1,5 +1,7 @@
+// Autor: Nombre Apellido
+
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 import { seedCategories } from '@/seeders/categorySeeder'
 import { seedReviews } from '@/seeders/reviewSeeder'
 
@@ -27,7 +29,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'One of the oldest cat breeds.',
       image: '/images/animals/persa.png',
       category: catCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '1'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '1'),
     },
     {
       id: '2',
@@ -42,7 +44,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Descendant of the Techichi dog.',
       image: '/images/animals/chihuahua.png',
       category: dogCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '2'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '2'),
     },
     {
       id: '3',
@@ -57,7 +59,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Native to rainforest regions.',
       image: '/images/animals/macaw.png',
       category: birdCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '3'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '3'),
     },
     {
       id: '4',
@@ -72,7 +74,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'A cross between the Persian and Siamese breeds.',
       image: '/images/animals/himalayan.png',
       category: catCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '4'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '4'),
     },
     {
       id: '5',
@@ -87,7 +89,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Originally bred for hunting and retrieving.',
       image: '/images/animals/golden-retriever.png',
       category: dogCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '5'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '5'),
     },
     {
       id: '6',
@@ -102,7 +104,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Native to the Atlantic islands.',
       image: '/images/animals/canary.png',
       category: birdCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '6'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '6'),
     },
     {
       id: '7',
@@ -117,7 +119,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Bred for its small size and cute appearance.',
       image: '/images/animals/netherland-dwarf.png',
       category: rabbitCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '7'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '7'),
     },
     {
       id: '8',
@@ -132,7 +134,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Discovered in the 1930s and quickly became a popular pet.',
       image: '/images/animals/syrian-hamster.png',
       category: hamsterCategory,
-      reviews: reviews.filter(r => r.domesticAnimalId === '8'),
+      reviews: reviews.filter((r) => r.domesticAnimalId === '8'),
     },
   ]
 }

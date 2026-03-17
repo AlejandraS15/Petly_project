@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+// Internal imports
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 import DomesticAnimalCard from '@/components/DomesticAnimalCard.vue'
 
 defineProps<{

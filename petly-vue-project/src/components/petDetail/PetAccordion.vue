@@ -1,10 +1,6 @@
 <script setup lang="ts">
-/**
- * PetAccordion.vue
- * Sección expandible de información
- */
-
-import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
+// Internal imports
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
 
 defineProps<{
   pet: DomesticAnimalInterface

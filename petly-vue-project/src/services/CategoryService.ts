@@ -1,5 +1,7 @@
+// Autor: Nombre Apellido
+
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/categoryInterface'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface'
 import { seedCategories } from '@/seeders/categorySeeder'
 
 const STORAGE_KEY = 'categories'
