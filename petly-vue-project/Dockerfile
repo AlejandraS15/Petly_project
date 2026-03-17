@@ -1,4 +1,4 @@
-FROM nginx: alpine
+FROM nginx:alpine
 # Copy pre-built dist folder
 COPY dist/ /usr/share/nginx/html/
 # Copy nginx config for SPA routing
