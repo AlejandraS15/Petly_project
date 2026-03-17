@@ -5,7 +5,7 @@ import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterfa
 
 import ReviewList from './ReviewList.vue'
 import ReviewForm from './ReviewForm.vue'
-import RatingChart from '@/components/dashboard/RatingChart.vue'
+import RatingChart from '@/components/dashboard/RatingChart.vue'<
 
 defineProps<{
   pet: DomesticAnimalInterface
