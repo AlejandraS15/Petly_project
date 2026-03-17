@@ -14,6 +14,7 @@ import PetImageGallery from '@/components/petDetail/PetImageGallery.vue'
 import PetInfoSection from '@/components/petDetail/PetInfoSection.vue'
 import PetStatsTable from '@/components/petDetail/PetStatsTable.vue'
 import PetAccordion from '@/components/petDetail/PetAccordion.vue'
+import ReviewsSection from '@/components/reviews/ReviewsSection.vue'
 
 const route = useRoute()
 const animalStore = useDomesticAnimalStore()
@@ -45,5 +46,6 @@ onMounted(() => {
     </div>
 
     <PetAccordion :pet="pet" />
+    <ReviewsSection :pet="pet" />
   </main>
 </template>

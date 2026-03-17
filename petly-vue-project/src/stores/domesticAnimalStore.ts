@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterface'
 import { DomesticAnimalService } from '@/services/domesticAnimalService'
+import type { ReviewInterface } from '@/interfaces/reviewInterface'
 import { useCategoryStore } from '@/stores/categoryStore'
 
 export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
@@ -21,6 +22,16 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
 
   function getAnimalById(id: string) {
     return animals.value.find((animal) => animal.id === id)
+  }
+
+  function addReview(animalId: string, review: ReviewInterface): void {
+    const animal = animals.value.find((a) => a.id === animalId)
+
+    if (!animal) return
+
+    animal.reviews.push(review)
+
+    localStorage.setItem('domesticAnimals', JSON.stringify(animals.value))
   }
 
   const filteredAnimals = computed(() => {
@@ -42,5 +53,6 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     loadAnimals,
     setSearch,
     getAnimalById,
+    addReview,
   }
 })
