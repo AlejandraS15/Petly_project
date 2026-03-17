@@ -16,24 +16,32 @@ const reviewStore = useReviewStore()
 
 const { animals } = storeToRefs(animalStore)
 
-// Construir lista con promedio de rating por animal
+// calcular promedio de rating por animal
 const animalsWithRating = computed(() => {
 
-return animals.value.map(animal => ({
+  return animals.value.map(animal => {
 
-breed: animal.breed,
-rating: reviewStore.getAverageRating(animal.id)
+    const avgRating =
+      animal.reviews.length > 0
+        ? animal.reviews.reduce((sum, r) => sum + r.rating, 0) /
+          animal.reviews.length
+        : 0
 
-}))
+    return {
+      breed: animal.breed,
+      rating: avgRating
+    }
+
+  })
 
 })
 
 // Top animales según rating promedio
 const topAnimals = computed(() => {
 
-return [...animalsWithRating.value]
-.sort((a,b)=> b.rating - a.rating)
-.slice(0,5)
+    return [...animalsWithRating.value]
+    .sort((a,b)=> b.rating - a.rating)
+    .slice(0,5)
 
 })
 

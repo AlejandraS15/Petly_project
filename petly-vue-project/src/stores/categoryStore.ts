@@ -7,16 +7,13 @@ import type { CategoryInterface } from '@/interfaces/categoryInterface'
 import { CategoryService } from '@/services/categoryService'
 
 export const useCategoryStore = defineStore('category', () => {
-
   // Reactive Variables
   const categories = ref<CategoryInterface[]>([])
   const selectedCategoryId = ref<string | null>(null)
 
   // Selectors
   function getSelectedCategory(): CategoryInterface | undefined {
-    return categories.value.find(
-      category => category.id === selectedCategoryId.value
-    )
+    return categories.value.find((category) => category.id === selectedCategoryId.value)
   }
 
   // Actions
@@ -33,7 +30,6 @@ export const useCategoryStore = defineStore('category', () => {
     selectedCategoryId,
     loadCategories,
     selectCategory,
-    getSelectedCategory
+    getSelectedCategory,
   }
-
 })

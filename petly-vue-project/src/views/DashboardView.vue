@@ -8,9 +8,11 @@ import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
 import { useReviewStore } from "@/stores/reviewStore"
 
 // Components
-import StatsCards from "@/components/dashboard/StatsCards.vue"
-import RatingChart from "@/components/dashboard/RatingChart.vue"
+// Components
+import AnimalsChart from "@/components/dashboard/AnimalsChart.vue"
 import AnimalsMap from "@/components/dashboard/AnimalsMap.vue"
+import RatingChart from '@/components/dashboard/RatingChart.vue'
+import StatsCards from "@/components/dashboard/StatsCards.vue"
 import UsersTable from "@/components/dashboard/UsersTable.vue"
 
 
@@ -22,6 +24,7 @@ const reviewStore = useReviewStore()
 onMounted(() => {
 
   animalStore.loadAnimals()
+
   reviewStore.loadReviews()
 
 })

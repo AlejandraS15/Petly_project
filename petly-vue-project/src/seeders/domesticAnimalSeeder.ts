@@ -3,12 +3,13 @@ import type { DomesticAnimalInterface } from '@/interfaces/domesticAnimalInterfa
 import { seedCategories } from '@/seeders/categorySeeder'
 
 export function seedDomesticAnimals(): DomesticAnimalInterface[] {
-
   const categories = seedCategories()
 
-  const catCategory = categories.find(category => category.id === 'cat')!
-  const dogCategory = categories.find(category => category.id === 'dog')!
-  const birdCategory = categories.find(category => category.id === 'bird')!
+  const catCategory = categories.find((category) => category.id === 'cat')!
+  const dogCategory = categories.find((category) => category.id === 'dog')!
+  const birdCategory = categories.find((category) => category.id === 'bird')!
+  const rabbitCategory = categories.find((category) => category.id === 'rabbit')!
+  const hamsterCategory = categories.find((category) => category.id === 'hamster')!
 
   return [
     {
@@ -24,7 +25,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'One of the oldest cat breeds.',
       image: '/images/animals/persa.png',
       category: catCategory,
-      reviews: []
+      reviews: [],
     },
     {
       id: '2',
@@ -39,7 +40,7 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Descendant of the Techichi dog.',
       image: '/images/animals/chihuahua.png',
       category: dogCategory,
-      reviews: []
+      reviews: [],
     },
     {
       id: '3',
@@ -54,7 +55,82 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       history: 'Native to rainforest regions.',
       image: '/images/animals/macaw.png',
       category: birdCategory,
-      reviews: []
-    }
+      reviews: [],
+    },
+    {
+      id: '4',
+      breed: 'Himalayan',
+      description: 'Long-haired cat with blue eyes.',
+      lifeExpectancy: '12-15 years',
+      weight: '3-5 kg',
+      height: '23-25 cm',
+      behaviours: 'Calm and affectionate',
+      commonDisease: 'Polycystic kidney disease',
+      countryOrigin: 'Iran',
+      history: 'A cross between the Persian and Siamese breeds.',
+      image: '/images/animals/himalayan.png',
+      category: catCategory,
+      reviews: [],
+    },
+    {
+      id: '5',
+      breed: 'Golden Retriever',
+      description: 'Friendly and intelligent dog.',
+      lifeExpectancy: '10-12 years',
+      weight: '25-34 kg',
+      height: '58-61 cm',
+      behaviours: 'Loyal and gentle',
+      commonDisease: 'Hip dysplasia',
+      countryOrigin: 'Scotland',
+      history: 'Originally bred for hunting and retrieving.',
+      image: '/images/animals/golden-retriever.png',
+      category: dogCategory,
+      reviews: [],
+    },
+    {
+      id: '6',
+      breed: 'Canary',
+      description: 'Small and colorful songbird.',
+      lifeExpectancy: '10-15 years',
+      weight: '10-15 g',
+      height: '10-12 cm',
+      behaviours: 'Sociable and vocal',
+      commonDisease: 'Respiratory infections',
+      countryOrigin: 'Canary Islands',
+      history: 'Native to the Atlantic islands.',
+      image: '/images/animals/canary.png',
+      category: birdCategory,
+      reviews: [],
+    },
+    {
+      id: '7',
+      breed: 'Netherland Dwarf',
+      description: 'Small and compact rabbit.',
+      lifeExpectancy: '7-10 years',
+      weight: '0.5-1.5 kg',
+      height: '20-25 cm',
+      behaviours: 'Shy but playful',
+      commonDisease: 'Dental issues',
+      countryOrigin: 'Netherlands',
+      history: 'Bred for its small size and cute appearance.',
+      image: '/images/animals/netherland-dwarf.png',
+      category: rabbitCategory,
+      reviews: [],
+    },
+    {
+      id: '8',
+      breed: 'Syrian Hamster',
+      description: 'Popular small pet hamster.',
+      lifeExpectancy: '2-3 years',
+      weight: '120-150 g',
+      height: '15-20 cm',
+      behaviours: 'Nocturnal and solitary',
+      commonDisease: 'Wet tail disease',
+      countryOrigin: 'Syria',
+      history: 'Discovered in the 1930s and quickly became a popular pet.',
+      image: '/images/animals/syrian-hamster.png',
+      category: hamsterCategory,
+      reviews: [],
+    },
   ]
 }

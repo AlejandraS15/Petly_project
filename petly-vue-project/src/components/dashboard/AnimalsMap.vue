@@ -8,6 +8,7 @@ import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet"
 import "leaflet/dist/leaflet.css"
 import L from "leaflet"
 
+// Fix icon issue in Vite
 delete (L.Icon.Default.prototype as any)._getIconUrl
 
 L.Icon.Default.mergeOptions({
@@ -22,36 +23,33 @@ L.Icon.Default.mergeOptions({
 const animalStore = useDomesticAnimalStore()
 const { animals } = storeToRefs(animalStore)
 
-const countryCoordinates: Record<string, {lat:number,lng:number}> = {
-
-  Iran: { lat: 32.4279, lng: 53.6880 },
+const countryCoordinates: Record<string, { lat: number; lng: number }> = {
+  Iran: { lat: 32.4279, lng: 53.688 },
   Mexico: { lat: 23.6345, lng: -102.5528 },
   "South America": { lat: -15, lng: -60 }
-
 }
 
 const animalLocations = computed(() => {
-
   return animals.value
-    .map(animal => {
-
+    .map((animal) => {
       const coords = countryCoordinates[animal.countryOrigin]
 
-      if(!coords) return null
+      if (!coords) return null
 
       return {
         breed: animal.breed,
         lat: coords.lat,
         lng: coords.lng
       }
-
     })
-    .filter(Boolean)
-
+    .filter((a) => a !== null) as {
+      breed: string
+      lat: number
+      lng: number
+    }[]
 })
 
 </script>
-
 
 <template>
 
@@ -63,7 +61,7 @@ Animals Origin Map
 
 <LMap
 :zoom="2"
-:center="[10,-20]"
+:center="[10, -20]"
 style="height:400px; width:100%"
 >
 
@@ -72,15 +70,13 @@ url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 />
 
 <LMarker
-v-for="(animal,i) in animalLocations"
+v-for="(animal, i) in animalLocations"
 :key="i"
-:lat-lng="[animal.lat,animal.lng]"
+:lat-lng="[animal.lat, animal.lng]"
 >
 
 <LPopup>
-
 <strong>{{ animal.breed }}</strong>
-
 </LPopup>
 
 </LMarker>
