@@ -1,23 +1,18 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
 
-import { computed } from "vue"
-import { storeToRefs } from "pinia"
-import { useDomesticAnimalStore } from "@/stores/domesticAnimalStore"
-
-import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet"
-import "leaflet/dist/leaflet.css"
-import L from "leaflet"
-
+import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 // Fix icon issue in Vite
 delete (L.Icon.Default.prototype as any)._getIconUrl
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
-  iconUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
-  shadowUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png"
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
 })
 
 const animalStore = useDomesticAnimalStore()
@@ -39,7 +34,7 @@ const animalLocations = computed(() => {
       return {
         breed: animal.breed,
         lat: coords.lat,
-        lng: coords.lng
+        lng: coords.lng,
       }
     })
     .filter((a) => a !== null) as {
@@ -48,7 +43,6 @@ const animalLocations = computed(() => {
       lng: number
     }[]
 })
-
 </script>
 
 <template>

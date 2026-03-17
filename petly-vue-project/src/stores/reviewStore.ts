@@ -13,33 +13,23 @@ export const useReviewStore = defineStore("review", () => {
   }
 
   function getReviewsByAnimal(animalId: string): ReviewInterface[] {
-
-    return reviews.value.filter(
-      review => review.domesticAnimalId === animalId
-    )
-
+    return reviews.value.filter((review) => review.domesticAnimalId === animalId)
   }
 
   function getAverageRating(animalId: string): number {
-
     const animalReviews = getReviewsByAnimal(animalId)
 
     if (animalReviews.length === 0) return 0
 
-    const total = animalReviews.reduce(
-      (sum, review) => sum + review.rating,
-      0
-    )
+    const total = animalReviews.reduce((sum, review) => sum + review.rating, 0)
 
     return total / animalReviews.length
-
   }
 
   return {
     reviews,
     loadReviews,
     getReviewsByAnimal,
-    getAverageRating
+    getAverageRating,
   }
-
 })
