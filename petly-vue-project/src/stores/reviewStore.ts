@@ -2,7 +2,7 @@ import { ref } from "vue"
 import { defineStore } from "pinia"
 
 import type { ReviewInterface } from "@/interfaces/reviewInterface"
-import { ReviewService } from "@/services/reviewService"
+import { ReviewService } from "@/services/ReviewService"
 
 export const useReviewStore = defineStore("review", () => {
 
