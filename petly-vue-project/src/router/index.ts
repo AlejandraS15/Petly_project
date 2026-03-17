@@ -1,4 +1,6 @@
-// Autor: Nombre Apellido
+/**
+ * Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
+ */
 
 // External imports
 import { createRouter, createWebHistory } from 'vue-router'
@@ -9,7 +11,9 @@ import HomeView from '@/views/HomeView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import PetAdminDetailView from '@/views/PetAdminDetailView.vue'
 import PetDetailView from '@/views/PetDetailView.vue'
+import PetFormView from '@/views/PetFormView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 
 const router = createRouter({
@@ -73,6 +77,26 @@ const router = createRouter({
         title: 'Petly | Profile',
         requiresAuth: true,
         requiresAdmin: false,
+      },
+    },
+    {
+      path: '/admin/pet/new',
+      name: 'petNew',
+      component: PetFormView,
+      meta: {
+        title: 'Petly | New Animal',
+        requiresAuth: true,
+        requiresAdmin: true,
+      },
+    },
+    {
+      path: '/admin/pet/:id',
+      name: 'petAdminDetail',
+      component: PetAdminDetailView,
+      meta: {
+        title: 'Petly | Admin Animal Detail',
+        requiresAuth: true,
+        requiresAdmin: true,
       },
     },
   ],
