@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Camila Velez
 
 export interface ReviewInterface {
   id: string;

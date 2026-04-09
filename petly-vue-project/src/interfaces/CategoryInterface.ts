@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandra Suarez
 
 export interface CategoryInterface {
   id: string;

@@ -5,15 +5,15 @@ import './assets/main.css';
 
 // External imports
 import { createApp } from 'vue';
-import { createPinia } from 'pinia';
 
 // Internal imports
 import App from './App.vue';
 import router from './router';
+import PiniaConfig from './PiniaConfig.js'; 
 
 const app = createApp(App);
 
-app.use(createPinia());
+app.use(PiniaConfig.init());
 app.use(router);
 
 app.mount('#app');

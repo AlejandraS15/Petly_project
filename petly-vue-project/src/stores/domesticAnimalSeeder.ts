@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandra Suarez
 
 // Internal imports
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';

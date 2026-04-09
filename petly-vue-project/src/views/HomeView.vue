@@ -1,5 +1,6 @@
 <script setup lang="ts">
-// Autor: Nombre Apellido
+// Autor: Camila Velez
+// Corrección: Alejandra Suarez
 
 // External imports
 import { onMounted } from 'vue';

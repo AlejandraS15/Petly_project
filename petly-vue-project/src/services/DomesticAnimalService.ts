@@ -1,4 +1,5 @@
-// Autor: Nombre Apellido
+// Autor: Alejandra Suarez
+// Corrección: Alejandra Suarez
 
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
@@ -6,8 +7,9 @@ import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO';
 import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimalDTO';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 import type { ReviewInterface } from '@/interfaces/ReviewInterface';
-import { seedDomesticAnimals } from '@/seeders/domesticAnimalSeeder';
+import { seedDomesticAnimals } from '@/stores/domesticAnimalSeeder';
 import { CategoryService } from '@/services/CategoryService';
+import {  } from '@/stores/domesticAnimalStore.js'; 
 
 const STORAGE_KEY = 'domesticAnimals';
 

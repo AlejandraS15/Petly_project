@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Alejandra Suarez
 
 // Internal imports
 import type { CategoryInterface } from '@/interfaces/CategoryInterface';
