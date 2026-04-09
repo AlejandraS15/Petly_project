@@ -1,56 +1,56 @@
 <script setup lang="ts">
 // External imports
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
-import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet'
-import 'leaflet/dist/leaflet.css'
-import L from 'leaflet'
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { LMap, LTileLayer, LMarker, LPopup } from '@vue-leaflet/vue-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 // Internal imports
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
 // Fix Leaflet icon issue in Vite
 type LeafletDefaultIconPrototype = {
-  _getIconUrl?: unknown
-}
+  _getIconUrl?: unknown;
+};
 
-const iconPrototype = L.Icon.Default.prototype as LeafletDefaultIconPrototype
-delete iconPrototype._getIconUrl
+const iconPrototype = L.Icon.Default.prototype as LeafletDefaultIconPrototype;
+delete iconPrototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
   iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-})
+});
 
-const animalStore = useDomesticAnimalStore()
-const { animals } = storeToRefs(animalStore)
+const animalStore = useDomesticAnimalStore();
+const { animals } = storeToRefs(animalStore);
 
 const countryCoordinates: Record<string, { lat: number; lng: number }> = {
   Iran: { lat: 32.4279, lng: 53.688 },
   Mexico: { lat: 23.6345, lng: -102.5528 },
   'South America': { lat: -15, lng: -60 },
-}
+};
 
 const animalLocations = computed(() => {
   return animals.value
     .map((animal) => {
-      const coords = countryCoordinates[animal.countryOrigin]
+      const coords = countryCoordinates[animal.countryOrigin];
 
-      if (!coords) return null
+      if (!coords) return null;
 
       return {
         breed: animal.breed,
         lat: coords.lat,
         lng: coords.lng,
-      }
+      };
     })
     .filter((a) => a !== null) as {
-    breed: string
-    lat: number
-    lng: number
-  }[]
-})
+    breed: string;
+    lat: number;
+    lng: number;
+  }[];
+});
 </script>
 
 <template>

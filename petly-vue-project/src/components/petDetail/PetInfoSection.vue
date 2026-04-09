@@ -1,24 +1,24 @@
 <script setup lang="ts">
 // External imports
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 
 const averageRating = computed<number>(() => {
   if (props.pet.reviews.length === 0) {
-    return 0
+    return 0;
   }
 
-  const totalRating = props.pet.reviews.reduce((sum, review) => sum + review.rating, 0)
-  return totalRating / props.pet.reviews.length
-})
+  const totalRating = props.pet.reviews.reduce((sum, review) => sum + review.rating, 0);
+  return totalRating / props.pet.reviews.length;
+});
 
-const roundedRating = computed<number>(() => Math.round(averageRating.value))
+const roundedRating = computed<number>(() => Math.round(averageRating.value));
 </script>
 
 <template>

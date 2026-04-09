@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 </script>
 
 <template>

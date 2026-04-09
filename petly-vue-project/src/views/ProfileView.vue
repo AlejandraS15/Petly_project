@@ -2,42 +2,42 @@
 // Autor: Alejandro Arteaga
 
 // External imports
-import { computed, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // Internal imports
-import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO'
-import { useAuthStore } from '@/stores/authStore'
+import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO';
+import { useAuthStore } from '@/stores/authStore';
 
 type ProfileDetail = {
-  label: string
-  value: string
-}
+  label: string;
+  value: string;
+};
 
-const authStore = useAuthStore()
-const router = useRouter()
-const isEditing = ref<boolean>(false)
-const feedbackMessage = ref<string>('')
-const isSubmitting = ref<boolean>(false)
+const authStore = useAuthStore();
+const router = useRouter();
+const isEditing = ref<boolean>(false);
+const feedbackMessage = ref<string>('');
+const isSubmitting = ref<boolean>(false);
 
 const editForm = reactive<UpdateUserProfileDTO>({
   fullName: '',
   email: '',
   username: '',
-})
+});
 
-const currentUser = computed(() => authStore.activeUser)
+const currentUser = computed(() => authStore.activeUser);
 const canSubmit = computed(() => {
   return (
     editForm.fullName.trim().length > 0 &&
     editForm.email.trim().length > 0 &&
     editForm.username.trim().length > 0
-  )
-})
+  );
+});
 
 const profileDetails = computed<ProfileDetail[]>(() => {
   if (!currentUser.value) {
-    return []
+    return [];
   }
 
   return [
@@ -45,49 +45,49 @@ const profileDetails = computed<ProfileDetail[]>(() => {
     { label: 'Username', value: currentUser.value.username },
     { label: 'Email', value: currentUser.value.email },
     { label: 'Role', value: currentUser.value.role === 'admin' ? 'Administrator' : 'User' },
-  ]
-})
+  ];
+});
 
 function handleLogout(): void {
-  authStore.logout()
-  router.push({ name: 'login' })
+  authStore.logout();
+  router.push({ name: 'login' });
 }
 
 function startEditing(): void {
   if (!currentUser.value) {
-    return
+    return;
   }
 
-  editForm.fullName = currentUser.value.fullName
-  editForm.email = currentUser.value.email
-  editForm.username = currentUser.value.username
-  feedbackMessage.value = ''
-  isEditing.value = true
+  editForm.fullName = currentUser.value.fullName;
+  editForm.email = currentUser.value.email;
+  editForm.username = currentUser.value.username;
+  feedbackMessage.value = '';
+  isEditing.value = true;
 }
 
 function cancelEditing(): void {
-  isEditing.value = false
-  feedbackMessage.value = ''
+  isEditing.value = false;
+  feedbackMessage.value = '';
 }
 
 function submitProfileUpdate(): void {
   if (!canSubmit.value) {
-    feedbackMessage.value = 'Please complete all fields.'
-    return
+    feedbackMessage.value = 'Please complete all fields.';
+    return;
   }
 
-  isSubmitting.value = true
+  isSubmitting.value = true;
   const result = authStore.updateProfile({
     fullName: editForm.fullName,
     email: editForm.email,
     username: editForm.username,
-  })
-  isSubmitting.value = false
+  });
+  isSubmitting.value = false;
 
-  feedbackMessage.value = result.message
+  feedbackMessage.value = result.message;
 
   if (result.success) {
-    isEditing.value = false
+    isEditing.value = false;
   }
 }
 </script>

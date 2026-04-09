@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Internal imports
-import type { ReviewInterface } from '@/interfaces/ReviewInterface'
-import ReviewCard from '@/components/reviews/ReviewCard.vue'
+import type { ReviewInterface } from '@/interfaces/ReviewInterface';
+import ReviewCard from '@/components/reviews/ReviewCard.vue';
 
 defineProps<{
-  reviews: ReviewInterface[]
-}>()
+  reviews: ReviewInterface[];
+}>();
 </script>
 
 <template>

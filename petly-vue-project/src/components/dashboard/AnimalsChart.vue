@@ -1,28 +1,28 @@
 <script setup lang="ts">
 // External imports
-import { computed } from 'vue'
-import { Pie } from 'vue-chartjs'
-import { ArcElement, Chart, Legend, Tooltip } from 'chart.js'
-import { storeToRefs } from 'pinia'
+import { computed } from 'vue';
+import { Pie } from 'vue-chartjs';
+import { ArcElement, Chart, Legend, Tooltip } from 'chart.js';
+import { storeToRefs } from 'pinia';
 
 // Internal imports
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-Chart.register(ArcElement, Tooltip, Legend)
+Chart.register(ArcElement, Tooltip, Legend);
 
-const animalStore = useDomesticAnimalStore()
-const { animals } = storeToRefs(animalStore)
+const animalStore = useDomesticAnimalStore();
+const { animals } = storeToRefs(animalStore);
 
 const chartData = computed(() => {
-  const categories: Record<string, number> = {}
+  const categories: Record<string, number> = {};
 
   animals.value.forEach((a) => {
-    const cat = a.category.species
+    const cat = a.category.species;
 
-    if (!categories[cat]) categories[cat] = 0
+    if (!categories[cat]) categories[cat] = 0;
 
-    categories[cat]++
-  })
+    categories[cat]++;
+  });
 
   return {
     labels: Object.keys(categories),
@@ -33,8 +33,8 @@ const chartData = computed(() => {
         backgroundColor: ['#22c55e', '#3b82f6', '#f59e0b', '#ef4444'],
       },
     ],
-  }
-})
+  };
+});
 </script>
 
 <template>

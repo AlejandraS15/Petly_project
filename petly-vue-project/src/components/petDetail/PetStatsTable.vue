@@ -1,36 +1,36 @@
 <script setup lang="ts">
 // External imports
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 
 const sizeLabel = computed<string>(() => {
-  const weightMatches = props.pet.weight.match(/\d+(?:\.\d+)?/g)
+  const weightMatches = props.pet.weight.match(/\d+(?:\.\d+)?/g);
 
   if (!weightMatches || weightMatches.length === 0) {
-    return 'Unknown'
+    return 'Unknown';
   }
 
-  const numericWeights = weightMatches.map((value) => Number(value))
+  const numericWeights = weightMatches.map((value) => Number(value));
   const averageWeight =
     numericWeights.reduce((accumulator, current) => accumulator + current, 0) /
-    numericWeights.length
+    numericWeights.length;
 
   if (averageWeight < 5) {
-    return 'Small'
+    return 'Small';
   }
 
   if (averageWeight <= 20) {
-    return 'Medium'
+    return 'Medium';
   }
 
-  return 'Large'
-})
+  return 'Large';
+});
 </script>
 
 <template>

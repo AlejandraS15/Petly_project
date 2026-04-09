@@ -2,60 +2,60 @@
 // Autor: Nombre Apellido
 
 // External imports
-import { computed, onMounted, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // Internal imports
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from '@/stores/authStore';
 
-const authStore = useAuthStore()
-const router = useRouter()
+const authStore = useAuthStore();
+const router = useRouter();
 
 const form = reactive({
   usernameOrEmail: '',
   password: '',
-})
+});
 
-const feedbackMessage = ref<string>('')
-const isSubmitting = ref<boolean>(false)
+const feedbackMessage = ref<string>('');
+const isSubmitting = ref<boolean>(false);
 
 const canSubmit = computed(() => {
-  return form.usernameOrEmail.trim().length > 0 && form.password.trim().length > 0
-})
+  return form.usernameOrEmail.trim().length > 0 && form.password.trim().length > 0;
+});
 
 function resolveRedirect(): { name: 'home' | 'dashboard' } {
-  return authStore.activeUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' }
+  return authStore.activeUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
 }
 
 function handleLogin(): void {
   if (!canSubmit.value) {
-    feedbackMessage.value = 'Please complete all fields.'
-    return
+    feedbackMessage.value = 'Please complete all fields.';
+    return;
   }
 
-  isSubmitting.value = true
+  isSubmitting.value = true;
   const result = authStore.login({
     usernameOrEmail: form.usernameOrEmail,
     password: form.password,
-  })
-  isSubmitting.value = false
+  });
+  isSubmitting.value = false;
 
   if (!result.success) {
-    feedbackMessage.value = result.message
-    return
+    feedbackMessage.value = result.message;
+    return;
   }
 
-  feedbackMessage.value = ''
-  router.push(resolveRedirect())
+  feedbackMessage.value = '';
+  router.push(resolveRedirect());
 }
 
 onMounted(() => {
-  authStore.initializeAuth()
+  authStore.initializeAuth();
 
   if (authStore.isAuthenticated) {
-    router.replace(resolveRedirect())
+    router.replace(resolveRedirect());
   }
-})
+});
 </script>
 
 <template>

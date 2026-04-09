@@ -1,34 +1,34 @@
 <!-- Autor: Nombre Apellido -->
 <script setup lang="ts">
 // External imports
-import { computed, onMounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { computed, onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 // Internal imports
-import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
-import { useCategoryStore } from '@/stores/categoryStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import { useCategoryStore } from '@/stores/categoryStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-import PetAccordion from '@/components/petDetail/PetAccordion.vue'
-import PetForm from '@/components/petDetail/PetForm.vue'
-import PetImageGallery from '@/components/petDetail/PetImageGallery.vue'
-import PetInfoSection from '@/components/petDetail/PetInfoSection.vue'
-import PetStatsTable from '@/components/petDetail/PetStatsTable.vue'
+import PetAccordion from '@/components/petDetail/PetAccordion.vue';
+import PetForm from '@/components/petDetail/PetForm.vue';
+import PetImageGallery from '@/components/petDetail/PetImageGallery.vue';
+import PetInfoSection from '@/components/petDetail/PetInfoSection.vue';
+import PetStatsTable from '@/components/petDetail/PetStatsTable.vue';
 
-const route = useRoute()
-const router = useRouter()
-const animalStore = useDomesticAnimalStore()
-const categoryStore = useCategoryStore()
+const route = useRoute();
+const router = useRouter();
+const animalStore = useDomesticAnimalStore();
+const categoryStore = useCategoryStore();
 
-const pet = ref<DomesticAnimalInterface | null>(null)
-const isEditing = ref<boolean>(false)
-const isDeleting = ref<boolean>(false)
-const isSubmitting = ref<boolean>(false)
-const feedbackMessage = ref<string>('')
+const pet = ref<DomesticAnimalInterface | null>(null);
+const isEditing = ref<boolean>(false);
+const isDeleting = ref<boolean>(false);
+const isSubmitting = ref<boolean>(false);
+const feedbackMessage = ref<string>('');
 
 const editInitialValues = computed<Partial<CreateDomesticAnimalDTO>>(() => {
-  if (!pet.value) return {}
+  if (!pet.value) return {};
 
   return {
     breed: pet.value.breed,
@@ -42,62 +42,62 @@ const editInitialValues = computed<Partial<CreateDomesticAnimalDTO>>(() => {
     history: pet.value.history,
     image: pet.value.image,
     categoryId: pet.value.category.id,
-  }
-})
+  };
+});
 
 function startEditing(): void {
-  feedbackMessage.value = ''
-  isEditing.value = true
+  feedbackMessage.value = '';
+  isEditing.value = true;
 }
 
 function cancelEditing(): void {
-  isEditing.value = false
-  feedbackMessage.value = ''
+  isEditing.value = false;
+  feedbackMessage.value = '';
 }
 
 function handleUpdate(data: CreateDomesticAnimalDTO): void {
-  if (!pet.value) return
+  if (!pet.value) return;
 
-  isSubmitting.value = true
-  const updated = animalStore.updateAnimal(pet.value.id, data)
-  isSubmitting.value = false
+  isSubmitting.value = true;
+  const updated = animalStore.updateAnimal(pet.value.id, data);
+  isSubmitting.value = false;
 
   if (!updated) {
-    feedbackMessage.value = 'Could not update: invalid category.'
-    return
+    feedbackMessage.value = 'Could not update: invalid category.';
+    return;
   }
 
-  pet.value = updated
-  isEditing.value = false
-  feedbackMessage.value = ''
+  pet.value = updated;
+  isEditing.value = false;
+  feedbackMessage.value = '';
 }
 
 function confirmDelete(): void {
-  isDeleting.value = true
+  isDeleting.value = true;
 }
 
 function cancelDelete(): void {
-  isDeleting.value = false
+  isDeleting.value = false;
 }
 
 function handleDelete(): void {
-  if (!pet.value) return
+  if (!pet.value) return;
 
-  animalStore.deleteAnimal(pet.value.id)
-  router.push({ name: 'home' })
+  animalStore.deleteAnimal(pet.value.id);
+  router.push({ name: 'home' });
 }
 
 onMounted(() => {
-  animalStore.loadAnimals()
-  categoryStore.loadCategories()
+  animalStore.loadAnimals();
+  categoryStore.loadCategories();
 
-  const id = route.params.id as string
-  const found = animalStore.getAnimalById(id)
+  const id = route.params.id as string;
+  const found = animalStore.getAnimalById(id);
 
   if (found) {
-    pet.value = found
+    pet.value = found;
   }
-})
+});
 </script>
 
 <template>

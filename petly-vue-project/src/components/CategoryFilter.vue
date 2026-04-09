@@ -1,21 +1,21 @@
 <script setup lang="ts">
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/CategoryInterface'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
 
 // Props
 defineProps<{
-  categories: CategoryInterface[]
-  activeCategory: string
-}>()
+  categories: CategoryInterface[];
+  activeCategory: string;
+}>();
 
 // Emits
 const emit = defineEmits<{
-  (e: 'select', id: string): void
-}>()
+  (e: 'select', id: string): void;
+}>();
 
 function selectCategory(event: Event): void {
-  const value = (event.target as HTMLSelectElement).value
-  emit('select', value)
+  const value = (event.target as HTMLSelectElement).value;
+  emit('select', value);
 }
 </script>
 

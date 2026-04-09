@@ -1,16 +1,16 @@
 <script setup lang="ts">
 // External
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // Variables
-const searchQuery = ref<string>('')
+const searchQuery = ref<string>('');
 // Emits
 const emit = defineEmits<{
-  (e: 'search', value: string): void
-}>()
+  (e: 'search', value: string): void;
+}>();
 
 function handleInput(): void {
-  emit('search', searchQuery.value)
+  emit('search', searchQuery.value);
 }
 </script>
 

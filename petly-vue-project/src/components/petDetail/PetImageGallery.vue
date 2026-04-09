@@ -1,17 +1,17 @@
 <script setup lang="ts">
 // Internal imports
-import defaultImage from '@/assets/default.jpg'
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import defaultImage from '@/assets/default.jpg';
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 
 function handleImageError(event: Event): void {
-  const imageElement = event.target as HTMLImageElement
+  const imageElement = event.target as HTMLImageElement;
 
   if (imageElement.src !== defaultImage) {
-    imageElement.src = defaultImage
+    imageElement.src = defaultImage;
   }
 }
 </script>

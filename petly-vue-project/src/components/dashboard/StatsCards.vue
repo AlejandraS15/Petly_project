@@ -1,31 +1,31 @@
 <script setup lang="ts">
 // External imports
-import { computed } from 'vue'
-import { storeToRefs } from 'pinia'
+import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
 
 // Internal imports
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-const animalStore = useDomesticAnimalStore()
-const { animals } = storeToRefs(animalStore)
+const animalStore = useDomesticAnimalStore();
+const { animals } = storeToRefs(animalStore);
 
-const totalAnimals = computed(() => animals.value.length)
+const totalAnimals = computed(() => animals.value.length);
 
 const animalsByCategory = computed(() => {
-  const counts: Record<string, number> = {}
+  const counts: Record<string, number> = {};
 
   animals.value.forEach((animal) => {
-    const category = animal.category?.species ?? 'Unknown'
+    const category = animal.category?.species ?? 'Unknown';
 
     if (!counts[category]) {
-      counts[category] = 0
+      counts[category] = 0;
     }
 
-    counts[category]++
-  })
+    counts[category]++;
+  });
 
-  return counts
-})
+  return counts;
+});
 </script>
 
 <template>

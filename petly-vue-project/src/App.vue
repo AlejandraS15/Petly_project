@@ -1,23 +1,23 @@
 <script setup lang="ts">
 // External imports
-import { onMounted } from 'vue'
-import { RouterView } from 'vue-router'
+import { onMounted } from 'vue';
+import { RouterView } from 'vue-router';
 
 // Internal imports
-import AppHeader from '@/components/AppHeader.vue'
-import { useAuthStore } from '@/stores/authStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import AppHeader from '@/components/AppHeader.vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-const authStore = useAuthStore()
-const domesticAnimalStore = useDomesticAnimalStore()
+const authStore = useAuthStore();
+const domesticAnimalStore = useDomesticAnimalStore();
 
 function handleGlobalSearch(query: string): void {
-  domesticAnimalStore.setSearch(query)
+  domesticAnimalStore.setSearch(query);
 }
 
 onMounted(() => {
-  authStore.initializeAuth()
-})
+  authStore.initializeAuth();
+});
 </script>
 
 <template>

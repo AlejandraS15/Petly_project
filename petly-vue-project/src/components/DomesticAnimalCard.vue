@@ -1,26 +1,26 @@
 <script setup lang="ts">
 // External imports
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
 // Internal imports
-import defaultImage from '@/assets/default.jpg'
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
+import defaultImage from '@/assets/default.jpg';
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 
-const router = useRouter()
+const router = useRouter();
 
 function goToDetail(): void {
-  router.push({ name: 'petDetail', params: { id: props.pet.id } })
+  router.push({ name: 'petDetail', params: { id: props.pet.id } });
 }
 
 function handleImageError(event: Event): void {
-  const imageElement = event.target as HTMLImageElement
+  const imageElement = event.target as HTMLImageElement;
 
   if (imageElement.src !== defaultImage) {
-    imageElement.src = defaultImage
+    imageElement.src = defaultImage;
   }
 }
 </script>

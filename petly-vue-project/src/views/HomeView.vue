@@ -2,36 +2,36 @@
 // Autor: Nombre Apellido
 
 // External imports
-import { onMounted } from 'vue'
-import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 
 // Internal imports
-import CategoryFilter from '@/components/CategoryFilter.vue'
-import DomesticAnimalGrid from '@/components/DomesticAnimalGrid.vue'
-import HomeHero from '@/components/HomeHero.vue'
-import { useAuthStore } from '@/stores/authStore'
-import { useCategoryStore } from '@/stores/categoryStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import CategoryFilter from '@/components/CategoryFilter.vue';
+import DomesticAnimalGrid from '@/components/DomesticAnimalGrid.vue';
+import HomeHero from '@/components/HomeHero.vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useCategoryStore } from '@/stores/categoryStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
 // Stores instances
-const authStore = useAuthStore()
-const categoryStore = useCategoryStore()
-const animalStore = useDomesticAnimalStore()
+const authStore = useAuthStore();
+const categoryStore = useCategoryStore();
+const animalStore = useDomesticAnimalStore();
 
 // Reactive refs
-const { categories, selectedCategoryId } = storeToRefs(categoryStore)
-const { filteredAnimals } = storeToRefs(animalStore)
+const { categories, selectedCategoryId } = storeToRefs(categoryStore);
+const { filteredAnimals } = storeToRefs(animalStore);
 
 function handleCategorySelect(id: string): void {
-  categoryStore.selectCategory(id)
+  categoryStore.selectCategory(id);
 }
 
 // Lifecycle
 onMounted(() => {
-  authStore.initializeAuth()
-  categoryStore.loadCategories()
-  animalStore.loadAnimals()
-})
+  authStore.initializeAuth();
+  categoryStore.loadCategories();
+  animalStore.loadAnimals();
+});
 </script>
 
 <template>

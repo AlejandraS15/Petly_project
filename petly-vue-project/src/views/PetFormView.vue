@@ -1,43 +1,43 @@
 <!-- Autor: Nombre Apellido -->
 <script setup lang="ts">
 // External imports
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // Internal imports
-import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
-import { useCategoryStore } from '@/stores/categoryStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
+import { useCategoryStore } from '@/stores/categoryStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-import PetForm from '@/components/petDetail/PetForm.vue'
+import PetForm from '@/components/petDetail/PetForm.vue';
 
-const router = useRouter()
-const animalStore = useDomesticAnimalStore()
-const categoryStore = useCategoryStore()
+const router = useRouter();
+const animalStore = useDomesticAnimalStore();
+const categoryStore = useCategoryStore();
 
-const isSubmitting = ref<boolean>(false)
-const feedbackMessage = ref<string>('')
+const isSubmitting = ref<boolean>(false);
+const feedbackMessage = ref<string>('');
 
 function handleCreate(data: CreateDomesticAnimalDTO): void {
-  isSubmitting.value = true
-  const created = animalStore.createAnimal(data)
-  isSubmitting.value = false
+  isSubmitting.value = true;
+  const created = animalStore.createAnimal(data);
+  isSubmitting.value = false;
 
   if (!created) {
-    feedbackMessage.value = 'Could not create animal: invalid category.'
-    return
+    feedbackMessage.value = 'Could not create animal: invalid category.';
+    return;
   }
 
-  router.push({ name: 'petAdminDetail', params: { id: created.id } })
+  router.push({ name: 'petAdminDetail', params: { id: created.id } });
 }
 
 function handleCancel(): void {
-  router.push({ name: 'dashboard' })
+  router.push({ name: 'dashboard' });
 }
 
 onMounted(() => {
-  categoryStore.loadCategories()
-})
+  categoryStore.loadCategories();
+});
 </script>
 
 <template>

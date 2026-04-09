@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Internal imports
-import type { ReviewInterface } from '@/interfaces/ReviewInterface'
-import StarRating from '@/components/reviews/StarRating.vue'
+import type { ReviewInterface } from '@/interfaces/ReviewInterface';
+import StarRating from '@/components/reviews/StarRating.vue';
 
 defineProps<{
-  review: ReviewInterface
-}>()
+  review: ReviewInterface;
+}>();
 </script>
 
 <template>

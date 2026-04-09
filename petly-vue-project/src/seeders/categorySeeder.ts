@@ -1,6 +1,6 @@
 // Autor: Nombre Apellido
 
-import type { CategoryInterface } from '@/interfaces/CategoryInterface'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
 
 export function seedCategories(): CategoryInterface[] {
   return [
@@ -34,5 +34,5 @@ export function seedCategories(): CategoryInterface[] {
       species: 'Hamsters',
       urlImage: '/images/categories/hamster.png',
     },
-  ]
+  ];
 }

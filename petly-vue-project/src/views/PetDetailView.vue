@@ -4,42 +4,42 @@
  * Vista de detalle del animal
  */
 
-import { onMounted, ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useRoute, useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRoute, useRouter } from 'vue-router';
 
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
-import PetAccordion from '@/components/petDetail/PetAccordion.vue'
-import PetImageGallery from '@/components/petDetail/PetImageGallery.vue'
-import PetInfoSection from '@/components/petDetail/PetInfoSection.vue'
-import PetStatsTable from '@/components/petDetail/PetStatsTable.vue'
-import ReviewsSection from '@/components/reviews/ReviewsSection.vue'
-import { useAuthStore } from '@/stores/authStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import PetAccordion from '@/components/petDetail/PetAccordion.vue';
+import PetImageGallery from '@/components/petDetail/PetImageGallery.vue';
+import PetInfoSection from '@/components/petDetail/PetInfoSection.vue';
+import PetStatsTable from '@/components/petDetail/PetStatsTable.vue';
+import ReviewsSection from '@/components/reviews/ReviewsSection.vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-const route = useRoute()
-const router = useRouter()
-const animalStore = useDomesticAnimalStore()
-const authStore = useAuthStore()
-const { isAdmin } = storeToRefs(authStore)
+const route = useRoute();
+const router = useRouter();
+const animalStore = useDomesticAnimalStore();
+const authStore = useAuthStore();
+const { isAdmin } = storeToRefs(authStore);
 
-const pet = ref<DomesticAnimalInterface | null>(null)
+const pet = ref<DomesticAnimalInterface | null>(null);
 
 onMounted(() => {
-  animalStore.loadAnimals()
+  animalStore.loadAnimals();
 
-  const id = route.params.id as string
-  const found = animalStore.getAnimalById(id)
+  const id = route.params.id as string;
+  const found = animalStore.getAnimalById(id);
 
   if (found) {
-    pet.value = found
+    pet.value = found;
   }
-})
+});
 
 function goToAdminView(): void {
-  const id = route.params.id as string
-  router.push({ name: 'petAdminDetail', params: { id } })
+  const id = route.params.id as string;
+  router.push({ name: 'petAdminDetail', params: { id } });
 }
 </script>
 

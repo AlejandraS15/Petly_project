@@ -1,38 +1,38 @@
 <script setup lang="ts">
 // External imports
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue';
 
 // Internal imports
-import type { UserInterface } from '@/interfaces/UserInterface'
-import { AuthService } from '@/services/AuthService'
+import type { UserInterface } from '@/interfaces/UserInterface';
+import { AuthService } from '@/services/AuthService';
 
-const users = ref<UserInterface[]>([])
-const pageSize = ref<number>(10)
-const currentPage = ref<number>(1)
+const users = ref<UserInterface[]>([]);
+const pageSize = ref<number>(10);
+const currentPage = ref<number>(1);
 
-const totalPages = computed(() => Math.ceil(users.value.length / pageSize.value))
+const totalPages = computed(() => Math.ceil(users.value.length / pageSize.value));
 
 const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return users.value.slice(start, end)
-})
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return users.value.slice(start, end);
+});
 
 function nextPage(): void {
   if (currentPage.value < totalPages.value) {
-    currentPage.value++
+    currentPage.value++;
   }
 }
 
 function prevPage(): void {
   if (currentPage.value > 1) {
-    currentPage.value--
+    currentPage.value--;
   }
 }
 
 onMounted(() => {
-  users.value = AuthService.getUsers()
-})
+  users.value = AuthService.getUsers();
+});
 </script>
 
 <template>

@@ -1,6 +1,6 @@
 // Autor: Nombre Apellido
 
-import type { ReviewInterface } from '@/interfaces/ReviewInterface'
+import type { ReviewInterface } from '@/interfaces/ReviewInterface';
 
 export function seedReviews(): ReviewInterface[] {
   return [
@@ -147,5 +147,5 @@ export function seedReviews(): ReviewInterface[] {
       userId: 'u1',
       domesticAnimalId: '8',
     },
-  ]
+  ];
 }

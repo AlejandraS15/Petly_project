@@ -2,26 +2,26 @@
 // Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
 
 // External imports
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { storeToRefs } from 'pinia'
-import { RouterLink, useRouter } from 'vue-router'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { RouterLink, useRouter } from 'vue-router';
 
 // Internal imports
-import SearchBar from '@/components/SearchBar.vue'
-import { useAuthStore } from '@/stores/authStore'
+import SearchBar from '@/components/SearchBar.vue';
+import { useAuthStore } from '@/stores/authStore';
 
 type MenuOption = {
-  id: 'profile' | 'categories' | 'dashboard' | 'login' | 'register' | 'petNew'
-  label: string
-  icon: string
-}
+  id: 'profile' | 'categories' | 'dashboard' | 'login' | 'register' | 'petNew';
+  label: string;
+  icon: string;
+};
 
-const authStore = useAuthStore()
-const { isAuthenticated, activeUser } = storeToRefs(authStore)
-const router = useRouter()
+const authStore = useAuthStore();
+const { isAuthenticated, activeUser } = storeToRefs(authStore);
+const router = useRouter();
 
-const dropdownOpen = ref<boolean>(false)
-const menuContainerRef = ref<HTMLElement | null>(null)
+const dropdownOpen = ref<boolean>(false);
+const menuContainerRef = ref<HTMLElement | null>(null);
 
 const menuOptions = computed<MenuOption[]>(() => {
   if (!activeUser.value) {
@@ -29,7 +29,7 @@ const menuOptions = computed<MenuOption[]>(() => {
       { id: 'login', label: 'Iniciar sesion', icon: '->' },
       { id: 'register', label: 'Crear cuenta', icon: '+' },
       { id: 'categories', label: 'Categorias', icon: 'o' },
-    ]
+    ];
   }
 
   if (activeUser.value.role === 'admin') {
@@ -38,82 +38,82 @@ const menuOptions = computed<MenuOption[]>(() => {
       { id: 'dashboard', label: 'Panel admin', icon: '[]' },
       { id: 'petNew', label: 'Nueva mascota', icon: '+' },
       { id: 'categories', label: 'Categorias', icon: 'o' },
-    ]
+    ];
   }
 
   return [
     { id: 'profile', label: 'Perfil', icon: 'o' },
     { id: 'categories', label: 'Categorias', icon: 'o' },
-  ]
-})
+  ];
+});
 
 function toggleDropdown(): void {
-  dropdownOpen.value = !dropdownOpen.value
+  dropdownOpen.value = !dropdownOpen.value;
 }
 
 function closeDropdown(): void {
-  dropdownOpen.value = false
+  dropdownOpen.value = false;
 }
 
 async function goToOption(optionId: MenuOption['id']): Promise<void> {
-  closeDropdown()
+  closeDropdown();
 
   if (optionId === 'profile') {
-    await router.push({ name: 'profile' })
-    return
+    await router.push({ name: 'profile' });
+    return;
   }
 
   if (optionId === 'categories') {
-    await router.push({ name: 'home', hash: '#categories-section' })
-    return
+    await router.push({ name: 'home', hash: '#categories-section' });
+    return;
   }
 
   if (optionId === 'dashboard') {
-    await router.push({ name: 'dashboard' })
-    return
+    await router.push({ name: 'dashboard' });
+    return;
   }
 
   if (optionId === 'login') {
-    await router.push({ name: 'login' })
-    return
+    await router.push({ name: 'login' });
+    return;
   }
 
   if (optionId === 'petNew') {
-    await router.push({ name: 'petNew' })
-    return
+    await router.push({ name: 'petNew' });
+    return;
   }
 
-  await router.push({ name: 'register' })
+  await router.push({ name: 'register' });
 }
 
 function handleOutsideClick(event: MouseEvent): void {
-  const menuContainer = menuContainerRef.value
+  const menuContainer = menuContainerRef.value;
 
   if (!menuContainer) {
-    return
+    return;
   }
 
   if (!menuContainer.contains(event.target as Node)) {
-    closeDropdown()
+    closeDropdown();
   }
 }
 
 // Emits
 const emit = defineEmits<{
-  (e: 'search', value: string): void
-}>()
+  (e: 'search', value: string): void;
+}>();
 
 function handleSearch(query: string): void {
-  emit('search', query)
+  emit('search', query);
 }
 
 onMounted(() => {
-  document.addEventListener('click', handleOutsideClick)
-})
+  document.addEventListener('click', handleOutsideClick);
+});
 
 onBeforeUnmount(() => {
-  document.removeEventListener('click', handleOutsideClick)
-})
+  document.removeEventListener('click', handleOutsideClick);
+});
 </script>
 
 <template>

@@ -1,19 +1,19 @@
 <script setup lang="ts">
 // External imports
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
-import ReviewForm from '@/components/reviews/ReviewForm.vue'
-import ReviewList from '@/components/reviews/ReviewList.vue'
-import { useAuthStore } from '@/stores/authStore'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import ReviewForm from '@/components/reviews/ReviewForm.vue';
+import ReviewList from '@/components/reviews/ReviewList.vue';
+import { useAuthStore } from '@/stores/authStore';
 
 defineProps<{
-  pet: DomesticAnimalInterface
-}>()
+  pet: DomesticAnimalInterface;
+}>();
 
-const authStore = useAuthStore()
-const showForm = ref<boolean>(false)
+const authStore = useAuthStore();
+const showForm = ref<boolean>(false);
 </script>
 
 <template>

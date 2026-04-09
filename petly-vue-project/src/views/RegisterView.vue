@@ -2,15 +2,15 @@
 // Autor: Nombre Apellido
 
 // External imports
-import { computed, onMounted, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, onMounted, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // Internal imports
-import type { Role } from '@/interfaces/UserInterface'
-import { useAuthStore } from '@/stores/authStore'
+import type { Role } from '@/interfaces/UserInterface';
+import { useAuthStore } from '@/stores/authStore';
 
-const authStore = useAuthStore()
-const router = useRouter()
+const authStore = useAuthStore();
+const router = useRouter();
 
 const form = reactive({
   fullName: '',
@@ -18,10 +18,10 @@ const form = reactive({
   username: '',
   password: '',
   role: 'user' as Role,
-})
+});
 
-const feedbackMessage = ref<string>('')
-const isSubmitting = ref<boolean>(false)
+const feedbackMessage = ref<string>('');
+const isSubmitting = ref<boolean>(false);
 
 const canSubmit = computed(() => {
   return (
@@ -29,45 +29,45 @@ const canSubmit = computed(() => {
     form.email.trim().length > 0 &&
     form.username.trim().length > 0 &&
     form.password.trim().length > 0
-  )
-})
+  );
+});
 
 function resolveRedirect(): { name: 'home' | 'dashboard' } {
-  return authStore.activeUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' }
+  return authStore.activeUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
 }
 
 function handleRegister(): void {
   if (!canSubmit.value) {
-    feedbackMessage.value = 'Please complete all fields.'
-    return
+    feedbackMessage.value = 'Please complete all fields.';
+    return;
   }
 
-  isSubmitting.value = true
+  isSubmitting.value = true;
   const result = authStore.register({
     fullName: form.fullName,
     email: form.email,
     username: form.username,
     password: form.password,
     role: form.role,
-  })
-  isSubmitting.value = false
+  });
+  isSubmitting.value = false;
 
   if (!result.success) {
-    feedbackMessage.value = result.message
-    return
+    feedbackMessage.value = result.message;
+    return;
   }
 
-  feedbackMessage.value = ''
-  router.push(resolveRedirect())
+  feedbackMessage.value = '';
+  router.push(resolveRedirect());
 }
 
 onMounted(() => {
-  authStore.initializeAuth()
+  authStore.initializeAuth();
 
   if (authStore.isAuthenticated) {
-    router.replace(resolveRedirect())
+    router.replace(resolveRedirect());
   }
-})
+});
 </script>
 
 <template>

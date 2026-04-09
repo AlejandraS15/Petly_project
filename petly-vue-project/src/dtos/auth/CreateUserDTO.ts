@@ -1,5 +1,5 @@
 // Autor: Alejandro Arteaga
 
-import type { UserInterface } from '@/interfaces/UserInterface'
+import type { UserInterface } from '@/interfaces/UserInterface';
 
-export type CreateUserDTO = Omit<UserInterface, 'id'>
+export type CreateUserDTO = Omit<UserInterface, 'id'>;

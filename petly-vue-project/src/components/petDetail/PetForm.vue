@@ -2,23 +2,23 @@
 <!-- Componente reutilizable para crear y editar animales domésticos -->
 <script setup lang="ts">
 // External imports
-import { reactive, watch } from 'vue'
+import { reactive, watch } from 'vue';
 
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/CategoryInterface'
-import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
+import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
 
 const props = defineProps<{
-  initialValues?: Partial<CreateDomesticAnimalDTO>
-  categories: CategoryInterface[]
-  isSubmitting: boolean
-  feedbackMessage: string
-}>()
+  initialValues?: Partial<CreateDomesticAnimalDTO>;
+  categories: CategoryInterface[];
+  isSubmitting: boolean;
+  feedbackMessage: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'submit', data: CreateDomesticAnimalDTO): void
-  (e: 'cancel'): void
-}>()
+  (e: 'submit', data: CreateDomesticAnimalDTO): void;
+  (e: 'cancel'): void;
+}>();
 
 const form = reactive<CreateDomesticAnimalDTO>({
   breed: '',
@@ -32,20 +32,20 @@ const form = reactive<CreateDomesticAnimalDTO>({
   history: '',
   image: '',
   categoryId: '',
-})
+});
 
 watch(
   () => props.initialValues,
   (values) => {
     if (values) {
-      Object.assign(form, values)
+      Object.assign(form, values);
     }
   },
   { immediate: true },
-)
+);
 
 function handleSubmit(): void {
-  emit('submit', { ...form })
+  emit('submit', { ...form });
 }
 </script>
 

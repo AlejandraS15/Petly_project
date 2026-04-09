@@ -1,19 +1,19 @@
 <script setup lang="ts">
 // External imports
-import { onMounted } from 'vue'
+import { onMounted } from 'vue';
 
 // Internal imports
-import AnimalsMap from '@/components/dashboard/AnimalsMap.vue'
-import RatingChart from '@/components/dashboard/RatingChart.vue'
-import StatsCards from '@/components/dashboard/StatsCards.vue'
-import UsersTable from '@/components/dashboard/UsersTable.vue'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import AnimalsMap from '@/components/dashboard/AnimalsMap.vue';
+import RatingChart from '@/components/dashboard/RatingChart.vue';
+import StatsCards from '@/components/dashboard/StatsCards.vue';
+import UsersTable from '@/components/dashboard/UsersTable.vue';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-const animalStore = useDomesticAnimalStore()
+const animalStore = useDomesticAnimalStore();
 
 onMounted(() => {
-  animalStore.loadAnimals()
-})
+  animalStore.loadAnimals();
+});
 </script>
 
 <template>

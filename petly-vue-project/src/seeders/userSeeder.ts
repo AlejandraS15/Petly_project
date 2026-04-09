@@ -1,6 +1,6 @@
 // Autor: Alejandro Arteaga
 
-import type { CreateUserDTO } from '@/dtos/auth/CreateUserDTO'
+import type { CreateUserDTO } from '@/dtos/auth/CreateUserDTO';
 
 export function seedUsers(): CreateUserDTO[] {
   return [
@@ -18,5 +18,5 @@ export function seedUsers(): CreateUserDTO[] {
       password: 'User123*',
       role: 'user',
     },
-  ]
+  ];
 }

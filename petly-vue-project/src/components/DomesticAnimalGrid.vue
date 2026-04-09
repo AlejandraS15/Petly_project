@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
-import DomesticAnimalCard from '@/components/DomesticAnimalCard.vue'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import DomesticAnimalCard from '@/components/DomesticAnimalCard.vue';
 
 defineProps<{
-  animals: DomesticAnimalInterface[]
-}>()
+  animals: DomesticAnimalInterface[];
+}>();
 </script>
 
 <template>

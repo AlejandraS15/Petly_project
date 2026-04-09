@@ -1,25 +1,25 @@
 <script setup lang="ts">
 // External imports
-import { ref } from 'vue'
+import { ref } from 'vue';
 
 // Internal imports
-import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO'
-import { useAuthStore } from '@/stores/authStore'
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore'
+import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO';
+import { useAuthStore } from '@/stores/authStore';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
 const props = defineProps<{
-  animalId: string
-}>()
+  animalId: string;
+}>();
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: 'close'): void;
+}>();
 
-const store = useDomesticAnimalStore()
-const authStore = useAuthStore()
+const store = useDomesticAnimalStore();
+const authStore = useAuthStore();
 
-const rating = ref<number>(5)
-const comment = ref<string>('')
+const rating = ref<number>(5);
+const comment = ref<string>('');
 
 function submitReview(): void {
   const dto: CreateReviewDTO = {
@@ -28,10 +28,10 @@ function submitReview(): void {
     postDate: new Date(),
     userId: authStore.activeUser!.id,
     domesticAnimalId: props.animalId,
-  }
+  };
 
-  store.addReview(props.animalId, dto)
-  emit('close')
+  store.addReview(props.animalId, dto);
+  emit('close');
 }
 </script>
 

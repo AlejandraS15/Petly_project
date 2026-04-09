@@ -1,18 +1,18 @@
 // Autores: Camila Velez, Alejandra Suarez & Alejandro Arteaga
 
 // External imports
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 // Internal imports
-import { AuthService } from '@/services/AuthService'
-import HomeView from '@/views/HomeView.vue'
-import DashboardView from '@/views/DashboardView.vue'
-import LoginView from '@/views/LoginView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import PetAdminDetailView from '@/views/PetAdminDetailView.vue'
-import PetDetailView from '@/views/PetDetailView.vue'
-import PetFormView from '@/views/PetFormView.vue'
-import ProfileView from '@/views/ProfileView.vue'
+import { AuthService } from '@/services/AuthService';
+import HomeView from '@/views/HomeView.vue';
+import DashboardView from '@/views/DashboardView.vue';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import PetAdminDetailView from '@/views/PetAdminDetailView.vue';
+import PetDetailView from '@/views/PetDetailView.vue';
+import PetFormView from '@/views/PetFormView.vue';
+import ProfileView from '@/views/ProfileView.vue';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -98,30 +98,30 @@ const router = createRouter({
       },
     },
   ],
-})
+});
 
 router.beforeEach((to) => {
-  document.title = String(to.meta.title ?? 'Petly')
+  document.title = String(to.meta.title ?? 'Petly');
 
-  const isLoggedIn = AuthService.isAuthenticated()
-  const activeUser = AuthService.getActiveUser()
-  const requiresAuth = Boolean(to.meta.requiresAuth)
-  const requiresAdmin = Boolean(to.meta.requiresAdmin)
-  const isAuthPage = to.name === 'login' || to.name === 'register'
+  const isLoggedIn = AuthService.isAuthenticated();
+  const activeUser = AuthService.getActiveUser();
+  const requiresAuth = Boolean(to.meta.requiresAuth);
+  const requiresAdmin = Boolean(to.meta.requiresAdmin);
+  const isAuthPage = to.name === 'login' || to.name === 'register';
 
   if (requiresAuth && !isLoggedIn) {
-    return { name: 'login' }
+    return { name: 'login' };
   }
 
   if (requiresAdmin && activeUser?.role !== 'admin') {
-    return { name: 'home' }
+    return { name: 'home' };
   }
 
   if (isAuthPage && isLoggedIn) {
-    return { name: activeUser?.role === 'admin' ? 'dashboard' : 'home' }
+    return { name: activeUser?.role === 'admin' ? 'dashboard' : 'home' };
   }
 
-  return true
-})
+  return true;
+});
 
-export default router
+export default router;

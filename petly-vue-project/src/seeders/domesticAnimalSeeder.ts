@@ -1,19 +1,19 @@
 // Autor: Nombre Apellido
 
 // Internal imports
-import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface'
-import { seedCategories } from '@/seeders/categorySeeder'
-import { seedReviews } from '@/seeders/reviewSeeder'
+import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import { seedCategories } from '@/seeders/categorySeeder';
+import { seedReviews } from '@/seeders/reviewSeeder';
 
 export function seedDomesticAnimals(): DomesticAnimalInterface[] {
-  const categories = seedCategories()
-  const reviews = seedReviews()
+  const categories = seedCategories();
+  const reviews = seedReviews();
 
-  const catCategory = categories.find((category) => category.id === 'cat')!
-  const dogCategory = categories.find((category) => category.id === 'dog')!
-  const birdCategory = categories.find((category) => category.id === 'bird')!
-  const rabbitCategory = categories.find((category) => category.id === 'rabbit')!
-  const hamsterCategory = categories.find((category) => category.id === 'hamster')!
+  const catCategory = categories.find((category) => category.id === 'cat')!;
+  const dogCategory = categories.find((category) => category.id === 'dog')!;
+  const birdCategory = categories.find((category) => category.id === 'bird')!;
+  const rabbitCategory = categories.find((category) => category.id === 'rabbit')!;
+  const hamsterCategory = categories.find((category) => category.id === 'hamster')!;
 
   return [
     {
@@ -136,5 +136,5 @@ export function seedDomesticAnimals(): DomesticAnimalInterface[] {
       category: hamsterCategory,
       reviews: reviews.filter((r) => r.domesticAnimalId === '8'),
     },
-  ]
+  ];
 }

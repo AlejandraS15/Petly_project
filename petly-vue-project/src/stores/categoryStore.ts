@@ -1,28 +1,28 @@
 // External imports
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
 // Internal imports
-import type { CategoryInterface } from '@/interfaces/CategoryInterface'
-import { CategoryService } from '@/services/CategoryService'
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
+import { CategoryService } from '@/services/CategoryService';
 
 export const useCategoryStore = defineStore('category', () => {
   // Reactive Variables
-  const categories = ref<CategoryInterface[]>([])
-  const selectedCategoryId = ref<string | null>(null)
+  const categories = ref<CategoryInterface[]>([]);
+  const selectedCategoryId = ref<string | null>(null);
 
   // Selectors
   function getSelectedCategory(): CategoryInterface | undefined {
-    return categories.value.find((category) => category.id === selectedCategoryId.value)
+    return categories.value.find((category) => category.id === selectedCategoryId.value);
   }
 
   // Actions
   function loadCategories(): void {
-    categories.value = CategoryService.getCategories()
+    categories.value = CategoryService.getCategories();
   }
 
   function selectCategory(categoryId: string): void {
-    selectedCategoryId.value = categoryId
+    selectedCategoryId.value = categoryId;
   }
 
   return {
@@ -31,5 +31,5 @@ export const useCategoryStore = defineStore('category', () => {
     loadCategories,
     selectCategory,
     getSelectedCategory,
-  }
-})
+  };
+});
