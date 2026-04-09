@@ -1,6 +1,6 @@
+// Corrección: Alejandra Suarez
 <script setup lang="ts">
 // External imports
-import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 
 // Internal imports
@@ -11,20 +11,14 @@ import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 const authStore = useAuthStore();
 const domesticAnimalStore = useDomesticAnimalStore();
 
-function handleGlobalSearch(query: string): void {
-  domesticAnimalStore.setSearch(query);
-}
-
-onMounted(() => {
-  authStore.initializeAuth();
-});
+authStore.initializeAuth();
 </script>
 
 <template>
   <div class="min-h-screen bg-white">
     <div class="fixed inset-x-0 top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur-sm">
       <div class="mx-auto max-w-7xl px-6">
-        <AppHeader @search="handleGlobalSearch" />
+        <AppHeader @search="domesticAnimalStore.setSearch" />
       </div>
     </div>
 
