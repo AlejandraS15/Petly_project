@@ -1,4 +1,4 @@
-// Autor: Nombre Apellido
+// Autor: Camila Velez
 
 import type { ReviewInterface } from '@/interfaces/ReviewInterface';
 

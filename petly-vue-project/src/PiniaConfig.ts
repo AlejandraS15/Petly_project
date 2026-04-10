@@ -1,6 +1,6 @@
 import { createPinia } from 'pinia'; 
 import { watch } from 'vue'; 
-import { seedDomesticAnimals } from '@/stores/domesticAnimalSeeder.js'; 
+import { seedDomesticAnimals } from '@/seeders/domesticAnimalSeeder.js'; 
 
 export default class PiniaConfig {
     public static init() {

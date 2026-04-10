@@ -9,6 +9,9 @@ import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimal
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 import { DomesticAnimalService } from '@/services/DomesticAnimalService';
 import { useCategoryStore } from '@/stores/categoryStore';
+import { seedDomesticAnimals } from '@/seeders/domesticAnimalSeeder';
+
+const STORAGE_KEY = 'domesticAnimals';
 
 export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   const categoryStore = useCategoryStore();
@@ -16,8 +19,27 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   const animals = ref<DomesticAnimalInterface[]>([]);
   const searchQuery = ref<string>('');
 
+  function saveAnimals(currentAnimals: DomesticAnimalInterface[]): void {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentAnimals));
+  }
+
   function loadAnimals(): void {
-    animals.value = DomesticAnimalService.getDomesticAnimals();
+    const storedAnimals = localStorage.getItem(STORAGE_KEY);
+
+    if (!storedAnimals) {
+      const seededAnimals = seedDomesticAnimals();
+      animals.value = seededAnimals;
+      saveAnimals(seededAnimals);
+      return;
+    }
+
+    try {
+      animals.value = JSON.parse(storedAnimals) as DomesticAnimalInterface[];
+    } catch {
+      const seededAnimals = seedDomesticAnimals();
+      animals.value = seededAnimals;
+      saveAnimals(seededAnimals);
+    }
   }
 
   function setSearch(query: string): void {
@@ -33,40 +55,40 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
 
     if (created) {
       animals.value = [...animals.value, created];
+      saveAnimals(animals.value);
     }
 
     return created;
   }
 
   function updateAnimal(id: string, dto: UpdateDomesticAnimalDTO): DomesticAnimalInterface | null {
-    const updated = DomesticAnimalService.updateAnimal(id, dto);
+    const updated = DomesticAnimalService.updateAnimal(id, dto, animals.value);
 
     if (updated) {
       animals.value = animals.value.map((a) => (a.id === id ? updated : a));
+      saveAnimals(animals.value);
     }
 
     return updated;
   }
 
   function deleteAnimal(id: string): boolean {
-    const success = DomesticAnimalService.deleteAnimal(id);
+    const success = DomesticAnimalService.deleteAnimal(id, animals.value);
 
     if (success) {
       animals.value = animals.value.filter((a) => a.id !== id);
+      saveAnimals(animals.value);
     }
 
     return success;
   }
   function addReview(animalId: string, dto: CreateReviewDTO): void {
-    const added = DomesticAnimalService.addReview(animalId, dto);
+    const added = DomesticAnimalService.addReview(animalId, dto, animals.value);
 
     if (!added) return;
 
-    const animal = animals.value.find((a) => a.id === animalId);
-
-    if (animal) {
-      animal.reviews.push(added);
-    }
+    animals.value = added.updatedAnimals;
+    saveAnimals(animals.value);
   }
 
   function getReviewsByAnimal(animalId: string): DomesticAnimalInterface['reviews'] {
@@ -88,6 +110,7 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   const filteredAnimals = computed(() => {
     return animals.value.filter((animal) => {
       const matchesCategory =
+        !categoryStore.selectedCategoryId ||
         categoryStore.selectedCategoryId === 'all' ||
         animal.category.id === categoryStore.selectedCategoryId;
 

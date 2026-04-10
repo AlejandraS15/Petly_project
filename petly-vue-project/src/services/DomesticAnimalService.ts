@@ -7,31 +7,9 @@ import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO';
 import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimalDTO';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 import type { ReviewInterface } from '@/interfaces/ReviewInterface';
-import { seedDomesticAnimals } from '@/stores/domesticAnimalSeeder';
 import { CategoryService } from '@/services/CategoryService';
-import {  } from '@/stores/domesticAnimalStore.js'; 
-
-const STORAGE_KEY = 'domesticAnimals';
 
 export class DomesticAnimalService {
-  static getDomesticAnimals(): DomesticAnimalInterface[] {
-    const storedAnimals = localStorage.getItem(STORAGE_KEY);
-
-    if (!storedAnimals) {
-      const animals = seedDomesticAnimals();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
-      return animals;
-    }
-
-    try {
-      return JSON.parse(storedAnimals) as DomesticAnimalInterface[];
-    } catch {
-      const animals = seedDomesticAnimals();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
-      return animals;
-    }
-  }
-
   static filterByCategory(
     animals: DomesticAnimalInterface[],
     categoryId: string,
@@ -72,13 +50,14 @@ export class DomesticAnimalService {
       reviews: [],
     };
 
-    const animals = this.getDomesticAnimals();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...animals, newAnimal]));
-
     return newAnimal;
   }
 
-  static updateAnimal(id: string, dto: UpdateDomesticAnimalDTO): DomesticAnimalInterface | null {
+  static updateAnimal(
+    id: string,
+    dto: UpdateDomesticAnimalDTO,
+    animals: DomesticAnimalInterface[],
+  ): DomesticAnimalInterface | null {
     const categories = CategoryService.getCategories();
     const category = categories.find((c) => c.id === dto.categoryId);
 
@@ -86,7 +65,6 @@ export class DomesticAnimalService {
       return null;
     }
 
-    const animals = this.getDomesticAnimals();
     const existing = animals.find((a) => a.id === id);
 
     if (!existing) {
@@ -108,27 +86,20 @@ export class DomesticAnimalService {
       category,
     };
 
-    const updatedAnimals = animals.map((a) => (a.id === id ? updatedAnimal : a));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedAnimals));
-
     return updatedAnimal;
   }
 
-  static deleteAnimal(id: string): boolean {
-    const animals = this.getDomesticAnimals();
+  static deleteAnimal(id: string, animals: DomesticAnimalInterface[]): boolean {
     const filtered = animals.filter((a) => a.id !== id);
 
-    if (filtered.length === animals.length) {
-      return false;
-    }
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-
-    return true;
+    return filtered.length !== animals.length;
   }
 
-  static addReview(animalId: string, dto: CreateReviewDTO): ReviewInterface | null {
-    const animals = this.getDomesticAnimals();
+  static addReview(
+    animalId: string,
+    dto: CreateReviewDTO,
+    animals: DomesticAnimalInterface[],
+  ): { review: ReviewInterface; updatedAnimals: DomesticAnimalInterface[] } | null {
     const animal = animals.find((a) => a.id === animalId);
 
     if (!animal) {
@@ -140,9 +111,18 @@ export class DomesticAnimalService {
       ...dto,
     };
 
-    animal.reviews.push(newReview);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(animals));
+    const updatedAnimals = animals.map((currentAnimal) =>
+      currentAnimal.id === animalId
+        ? {
+            ...currentAnimal,
+            reviews: [...currentAnimal.reviews, newReview],
+          }
+        : currentAnimal,
+    );
 
-    return newReview;
+    return {
+      review: newReview,
+      updatedAnimals,
+    };
   }
 }

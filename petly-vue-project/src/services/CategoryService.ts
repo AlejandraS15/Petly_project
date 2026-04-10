@@ -2,20 +2,20 @@
 
 // Internal imports
 import type { CategoryInterface } from '@/interfaces/CategoryInterface';
-import { seedCategories } from '@/seeders/categorySeeder';
-
-const STORAGE_KEY = 'categories';
+import { useCategoryStore } from '@/stores/categoryStore';
 
 export class CategoryService {
   static getCategories(): CategoryInterface[] {
-    const storedCategories = localStorage.getItem(STORAGE_KEY);
+    const categoryStore = useCategoryStore();
 
-    if (!storedCategories) {
-      const categories = seedCategories();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(categories));
-      return categories;
+    if (categoryStore.categories.length === 0) {
+      categoryStore.loadCategories();
     }
 
-    return JSON.parse(storedCategories) as CategoryInterface[];
+    return categoryStore.categories;
+  }
+
+  static getCategoryById(id: string): CategoryInterface | undefined {
+    return this.getCategories().find((category) => category.id === id);
   }
 }

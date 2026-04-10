@@ -2,37 +2,16 @@
 // Autor: Camila Velez
 // Corrección: Alejandra Suarez
 
-// External imports
-import { onMounted } from 'vue';
-import { storeToRefs } from 'pinia';
-
 // Internal imports
 import CategoryFilter from '@/components/CategoryFilter.vue';
 import DomesticAnimalGrid from '@/components/DomesticAnimalGrid.vue';
 import HomeHero from '@/components/HomeHero.vue';
-import { useAuthStore } from '@/stores/authStore';
-import { useCategoryStore } from '@/stores/categoryStore';
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
+import { HomeService } from '@/services/HomeService';
 
-// Stores instances
-const authStore = useAuthStore();
-const categoryStore = useCategoryStore();
-const animalStore = useDomesticAnimalStore();
+const { categories, selectedCategoryId, filteredAnimals, handleCategorySelect, initialize } =
+  HomeService.useHomeViewModel();
 
-// Reactive refs
-const { categories, selectedCategoryId } = storeToRefs(categoryStore);
-const { filteredAnimals } = storeToRefs(animalStore);
-
-function handleCategorySelect(id: string): void {
-  categoryStore.selectCategory(id);
-}
-
-// Lifecycle
-onMounted(() => {
-  authStore.initializeAuth();
-  categoryStore.loadCategories();
-  animalStore.loadAnimals();
-});
+initialize();
 </script>
 
 <template>
@@ -43,7 +22,7 @@ onMounted(() => {
     <section id="categories-section" class="mt-10">
       <CategoryFilter
         :categories="categories"
-        :active-category="selectedCategoryId ?? 'all'"
+        :active-category="selectedCategoryId"
         @select="handleCategorySelect"
       />
     </section>
