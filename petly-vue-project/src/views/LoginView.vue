@@ -1,15 +1,13 @@
 <script setup lang="ts">
-// Autor: Nombre Apellido
+// Autor: Alejandro Arteaga
 
 // External imports
-import { computed, onMounted, reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 // Internal imports
 import { AuthService } from '@/services/AuthService';
-import { useAuthStore } from '@/stores/authStore';
 
-const authStore = useAuthStore();
 const router = useRouter();
 
 const form = reactive({
@@ -25,7 +23,7 @@ const canSubmit = computed(() => {
 });
 
 function resolveRedirect(): { name: 'home' | 'dashboard' } {
-  return authStore.currentUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
+  return AuthService.getActiveUser()?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
 }
 
 function handleLogin(): void {
@@ -50,13 +48,11 @@ function handleLogin(): void {
   router.push(resolveRedirect());
 }
 
-onMounted(() => {
-  AuthService.initializeAuthStore();
+AuthService.initializeAuthStore();
 
-  if (authStore.isAuthenticated) {
-    router.replace(resolveRedirect());
-  }
-});
+if (AuthService.isAuthenticated()) {
+  router.replace(resolveRedirect());
+}
 </script>
 
 <template>

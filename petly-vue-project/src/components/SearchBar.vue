@@ -36,7 +36,7 @@ function handleInput(): void {
       <input
         v-model="searchQuery"
         type="text"
-        placeholder="Search for pets..."
+        placeholder="Search for domesticAnimals..."
         class="pl-10 pr-4 py-2 bg-gray-100 rounded-full text-sm w-full focus:outline-none focus:ring-1 focus:ring-green-500"
         @input="handleInput"
       />

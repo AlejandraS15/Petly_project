@@ -9,9 +9,9 @@ import HomeView from '@/views/HomeView.vue';
 import DashboardView from '@/views/DashboardView.vue';
 import LoginView from '@/views/LoginView.vue';
 import RegisterView from '@/views/RegisterView.vue';
-import PetAdminDetailView from '@/views/PetAdminDetailView.vue';
-import PetDetailView from '@/views/PetDetailView.vue';
-import PetFormView from '@/views/PetFormView.vue';
+import DomesticAnimalAdminDetailView from '@/views/DomesticAnimalAdminDetailView.vue';
+import DomesticAnimalDetailView from '@/views/DomesticAnimalDetailView.vue';
+import DomesticAnimalFormView from '@/views/DomesticAnimalFormView.vue';
 import ProfileView from '@/views/ProfileView.vue';
 
 const router = createRouter({
@@ -58,11 +58,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/pet/:id',
-      name: 'petDetail',
-      component: PetDetailView,
+      path: '/domesticAnimal/:id',
+      name: 'domesticAnimalDetail',
+      component: DomesticAnimalDetailView,
       meta: {
-        title: 'Petly | Pet Detail',
+        title: 'Petly | DomesticAnimal Detail',
         requiresAuth: false,
         requiresAdmin: false,
       },
@@ -78,9 +78,9 @@ const router = createRouter({
       },
     },
     {
-      path: '/admin/pet/new',
-      name: 'petNew',
-      component: PetFormView,
+      path: '/admin/domesticAnimal/new',
+      name: 'domesticAnimalNew',
+      component: DomesticAnimalFormView,
       meta: {
         title: 'Petly | New Animal',
         requiresAuth: true,
@@ -88,9 +88,9 @@ const router = createRouter({
       },
     },
     {
-      path: '/admin/pet/:id',
-      name: 'petAdminDetail',
-      component: PetAdminDetailView,
+      path: '/admin/domesticAnimal/:id',
+      name: 'domesticAnimalAdminDetail',
+      component: DomesticAnimalAdminDetailView,
       meta: {
         title: 'Petly | Admin Animal Detail',
         requiresAuth: true,

@@ -9,7 +9,7 @@ import ReviewList from '@/components/reviews/ReviewList.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 defineProps<{
-  pet: DomesticAnimalInterface;
+  domesticAnimal: DomesticAnimalInterface;
 }>();
 
 const authStore = useAuthStore();
@@ -30,8 +30,8 @@ const showForm = ref<boolean>(false);
       </button>
     </div>
 
-    <ReviewList :reviews="pet.reviews" />
+    <ReviewList :reviews="domesticAnimal.reviews" />
 
-    <ReviewForm v-if="showForm" :animalId="pet.id" @close="showForm = false" />
+    <ReviewForm v-if="showForm" :animalId="domesticAnimal.id" @close="showForm = false" />
   </section>
 </template>

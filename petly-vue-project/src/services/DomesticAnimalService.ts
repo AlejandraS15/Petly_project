@@ -8,8 +8,31 @@ import type { UpdateDomesticAnimalDTO } from '@/dtos/animal/UpdateDomesticAnimal
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 import type { ReviewInterface } from '@/interfaces/ReviewInterface';
 import { CategoryService } from '@/services/CategoryService';
+import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
 export class DomesticAnimalService {
+  static initializeAnimalsStore(): void {
+    useDomesticAnimalStore().initializeAnimals();
+  }
+
+  static getAnimals(): DomesticAnimalInterface[] {
+    const animalStore = useDomesticAnimalStore();
+
+    if (!Array.isArray(animalStore.animals) || animalStore.animals.length === 0) {
+      animalStore.initializeAnimals();
+    }
+
+    return Array.isArray(animalStore.animals) ? animalStore.animals : [];
+  }
+
+  static getAnimalById(id: string): DomesticAnimalInterface | undefined {
+    return this.getAnimals().find((animal) => animal.id === id);
+  }
+
+  static setSearchQuery(query: string): void {
+    useDomesticAnimalStore().setSearch(query);
+  }
+
   static filterByCategory(
     animals: DomesticAnimalInterface[],
     categoryId: string,
@@ -124,5 +147,55 @@ export class DomesticAnimalService {
       review: newReview,
       updatedAnimals,
     };
+  }
+
+  static createAnimalAndSync(dto: CreateDomesticAnimalDTO): DomesticAnimalInterface | null {
+    const animalStore = useDomesticAnimalStore();
+    const created = this.createAnimal(dto);
+
+    if (!created) {
+      return null;
+    }
+
+    animalStore.setAnimals([...animalStore.animals, created]);
+    return created;
+  }
+
+  static updateAnimalAndSync(
+    id: string,
+    dto: UpdateDomesticAnimalDTO,
+  ): DomesticAnimalInterface | null {
+    const animalStore = useDomesticAnimalStore();
+    const updated = this.updateAnimal(id, dto, animalStore.animals);
+
+    if (!updated) {
+      return null;
+    }
+
+    animalStore.setAnimals(animalStore.animals.map((animal) => (animal.id === id ? updated : animal)));
+    return updated;
+  }
+
+  static deleteAnimalAndSync(id: string): boolean {
+    const animalStore = useDomesticAnimalStore();
+    const success = this.deleteAnimal(id, animalStore.animals);
+
+    if (success) {
+      animalStore.setAnimals(animalStore.animals.filter((animal) => animal.id !== id));
+    }
+
+    return success;
+  }
+
+  static addReviewAndSync(animalId: string, dto: CreateReviewDTO): ReviewInterface | null {
+    const animalStore = useDomesticAnimalStore();
+    const result = this.addReview(animalId, dto, animalStore.animals);
+
+    if (!result) {
+      return null;
+    }
+
+    animalStore.setAnimals(result.updatedAnimals);
+    return result.review;
   }
 }

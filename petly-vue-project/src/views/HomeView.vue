@@ -37,7 +37,7 @@ initialize();
       <button
         class="border border-gray-300 px-6 py-2 rounded-full text-sm hover:bg-gray-100 transition"
       >
-        Load More Pets
+        Load More DomesticAnimals
       </button>
     </div>
 
@@ -48,7 +48,7 @@ initialize();
           <h2 class="text-2xl font-black mb-4">PETLY.CO</h2>
 
           <p class="text-gray-500 max-w-sm text-sm">
-            Find what other people think about your pets and say something about them too.
+            Find what other people think about your domesticAnimals and say something about them too.
           </p>
 
           <div class="flex gap-4 mt-6 text-gray-400 text-sm">

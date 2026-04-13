@@ -9,14 +9,12 @@ import { useRouter } from 'vue-router';
 import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO';
 import { AuthService } from '@/services/AuthService';
 import { UserService } from '@/services/UserService';
-import { useAuthStore } from '@/stores/authStore';
 
 type ProfileDetail = {
   label: string;
   value: string;
 };
 
-const authStore = useAuthStore();
 const router = useRouter();
 const isEditing = ref<boolean>(false);
 const feedbackMessage = ref<string>('');
@@ -28,7 +26,7 @@ const editForm = reactive<UpdateUserProfileDTO>({
   username: '',
 });
 
-const currentUser = computed(() => authStore.currentUser);
+const currentUser = computed(() => AuthService.getActiveUser());
 const canSubmit = computed(() => {
   return (
     editForm.fullName.trim().length > 0 &&

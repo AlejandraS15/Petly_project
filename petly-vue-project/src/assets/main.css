@@ -371,7 +371,7 @@ a {
 
 /* ─── Admin pet toolbar ─────────────────────────────────────── */
 
-.admin-pet-toolbar {
+.admin-domestic-animal-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -380,7 +380,7 @@ a {
   border-bottom: 1px solid var(--color-border);
 }
 
-.admin-pet-category-badge {
+.admin-domestic-animal-category-badge {
   display: inline-block;
   padding: 0.3rem 0.85rem;
   background-color: var(--color-category-header);
@@ -392,18 +392,18 @@ a {
   letter-spacing: 0.02em;
 }
 
-.admin-pet-toolbar-actions {
+.admin-domestic-animal-toolbar-actions {
   display: flex;
   gap: 0.65rem;
 }
 
-.admin-pet-button {
+.admin-domestic-animal-button {
   min-height: 38px;
   padding: 0.35rem 0.95rem;
   font-size: 0.88rem;
 }
 
-.admin-pet-delete-button {
+.admin-domestic-animal-delete-button {
   min-height: 38px;
   padding: 0.35rem 0.95rem;
   font-size: 0.88rem;
@@ -413,13 +413,13 @@ a {
     color 0.2s ease;
 }
 
-.admin-pet-delete-button:hover {
+.admin-domestic-animal-delete-button:hover {
   background-color: #b91c1c;
   border-color: #b91c1c;
   color: #ffffff;
 }
 
-.admin-pet-confirm-delete {
+.admin-domestic-animal-confirm-delete {
   border: 1px dashed var(--color-border);
   border-radius: 12px;
   padding: 1rem 1.25rem;
@@ -427,13 +427,13 @@ a {
   background-color: #fff8f8;
 }
 
-.admin-pet-confirm-delete p {
+.admin-domestic-animal-confirm-delete p {
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--color-text);
 }
 
-.admin-pet-confirm-actions {
+.admin-domestic-animal-confirm-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.65rem;
@@ -442,7 +442,7 @@ a {
 
 /* ─── Pet form ──────────────────────────────────────────────── */
 
-.pet-form {
+.domestic-animal-form {
   padding: 1.5rem;
   background-color: #ffffff;
   border: 1px solid var(--color-border);
@@ -450,31 +450,31 @@ a {
   margin-bottom: 2rem;
 }
 
-.pet-form-grid {
+.domestic-animal-form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem 1.25rem;
 }
 
-.pet-form-field {
+.domestic-animal-form-field {
   display: grid;
   gap: 0.35rem;
 }
 
-.pet-form-field--full {
+.domestic-animal-form-field--full {
   grid-column: 1 / -1;
 }
 
-.pet-form-field label {
+.domestic-animal-form-field label {
   font-family: var(--font-body);
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--color-heading);
 }
 
-.pet-form-field input,
-.pet-form-field select,
-.pet-form-field textarea {
+.domestic-animal-form-field input,
+.domestic-animal-form-field select,
+.domestic-animal-form-field textarea {
   width: 100%;
   padding: 0.55rem 0.8rem;
   border: 1px solid var(--color-border);
@@ -487,27 +487,27 @@ a {
   resize: vertical;
 }
 
-.pet-form-field input:focus,
-.pet-form-field select:focus,
-.pet-form-field textarea:focus {
+.domestic-animal-form-field input:focus,
+.domestic-animal-form-field select:focus,
+.domestic-animal-form-field textarea:focus {
   outline: none;
   border-color: var(--color-primary-button);
 }
 
-.pet-form-actions {
+.domestic-animal-form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.65rem;
   margin-top: 1.25rem;
 }
 
-.pet-form-button {
+.domestic-animal-form-button {
   min-height: 40px;
   padding: 0.4rem 1rem;
   font-size: 0.9rem;
 }
 
-.pet-form-feedback {
+.domestic-animal-form-feedback {
   margin-top: 0.75rem;
   font-family: var(--font-body);
   font-size: 0.9rem;
@@ -538,15 +538,15 @@ a {
     align-items: flex-start;
   }
 
-  .pet-form-grid {
+  .domestic-animal-form-grid {
     grid-template-columns: 1fr;
   }
 
-  .pet-form-field--full {
+  .domestic-animal-form-field--full {
     grid-column: 1;
   }
 
-  .admin-pet-toolbar {
+  .admin-domestic-animal-toolbar {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;

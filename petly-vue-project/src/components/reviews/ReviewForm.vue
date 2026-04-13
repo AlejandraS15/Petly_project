@@ -6,7 +6,6 @@ import { ref } from 'vue';
 import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO';
 import { DomesticAnimalService } from '@/services/DomesticAnimalService';
 import { useAuthStore } from '@/stores/authStore';
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
 const props = defineProps<{
   animalId: string;
@@ -16,7 +15,6 @@ const emit = defineEmits<{
   (e: 'close'): void;
 }>();
 
-const store = useDomesticAnimalStore();
 const authStore = useAuthStore();
 
 const rating = ref<number>(5);
@@ -31,11 +29,7 @@ function submitReview(): void {
     domesticAnimalId: props.animalId,
   };
 
-  const result = DomesticAnimalService.addReview(props.animalId, dto, store.animals);
-
-  if (result) {
-    store.setAnimals(result.updatedAnimals);
-  }
+  DomesticAnimalService.addReviewAndSync(props.animalId, dto);
 
   emit('close');
 }

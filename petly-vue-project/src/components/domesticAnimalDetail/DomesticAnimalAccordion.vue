@@ -3,7 +3,7 @@
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 defineProps<{
-  pet: DomesticAnimalInterface;
+  domesticAnimal: DomesticAnimalInterface;
 }>();
 </script>
 
@@ -13,7 +13,7 @@ defineProps<{
       <summary class="cursor-pointer text-xl font-semibold">Behaviour</summary>
 
       <p class="mt-2 text-gray-600">
-        {{ pet.behaviours }}
+          {{ domesticAnimal.behaviours }}
       </p>
     </details>
 
@@ -21,7 +21,7 @@ defineProps<{
       <summary class="cursor-pointer text-xl font-semibold">Common Disease</summary>
 
       <p class="mt-2 text-gray-600">
-        {{ pet.commonDisease }}
+          {{ domesticAnimal.commonDisease }}
       </p>
     </details>
 
@@ -29,7 +29,7 @@ defineProps<{
       <summary class="cursor-pointer text-xl font-semibold">History</summary>
 
       <p class="mt-2 text-gray-600">
-        {{ pet.history }}
+          {{ domesticAnimal.history }}
       </p>
     </details>
   </div>

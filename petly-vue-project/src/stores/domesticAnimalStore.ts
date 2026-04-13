@@ -33,7 +33,14 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
     }
 
     try {
-      animals.value = JSON.parse(storedAnimals) as DomesticAnimalInterface[];
+      const parsedAnimals = JSON.parse(storedAnimals);
+
+      if (!Array.isArray(parsedAnimals)) {
+        setAnimals(seedDomesticAnimals());
+        return;
+      }
+
+      animals.value = parsedAnimals as DomesticAnimalInterface[];
     } catch {
       setAnimals(seedDomesticAnimals());
     }
@@ -68,10 +75,17 @@ export const useDomesticAnimalStore = defineStore('domesticAnimal', () => {
   }
 
   const filteredAnimals = computed(() => {
-    return animals.value.filter((animal) => {
+    const currentAnimals = Array.isArray(animals.value) ? animals.value : [];
+
+    return currentAnimals.filter((animal) => {
+      if (!animal || typeof animal.breed !== 'string' || !animal.category?.id) {
+        return false;
+      }
+
       const matchesCategory =
         !categoryStore.selectedCategoryId ||
         categoryStore.selectedCategoryId === 'all' ||
+        categoryStore.selectedCategoryId === 'allCategories' ||
         animal.category.id === categoryStore.selectedCategoryId;
 
       const matchesSearch = animal.breed.toLowerCase().includes(searchQuery.value.toLowerCase());

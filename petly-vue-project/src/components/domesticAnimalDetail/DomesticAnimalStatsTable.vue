@@ -6,11 +6,11 @@ import { computed } from 'vue';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface;
+  domesticAnimal: DomesticAnimalInterface;
 }>();
 
 const sizeLabel = computed<string>(() => {
-  const weightMatches = props.pet.weight.match(/\d+(?:\.\d+)?/g);
+  const weightMatches = props.domesticAnimal.weight.match(/\d+(?:\.\d+)?/g);
 
   if (!weightMatches || weightMatches.length === 0) {
     return 'Unknown';
@@ -43,9 +43,9 @@ const sizeLabel = computed<string>(() => {
     </div>
 
     <div class="grid grid-cols-4 text-center border-t">
-      <div class="p-3">{{ pet.lifeExpectancy }}</div>
-      <div class="p-3">{{ pet.weight }}</div>
-      <div class="p-3">{{ pet.height }}</div>
+      <div class="p-3">{{ domesticAnimal.lifeExpectancy }}</div>
+      <div class="p-3">{{ domesticAnimal.weight }}</div>
+      <div class="p-3">{{ domesticAnimal.height }}</div>
       <div class="p-3">{{ sizeLabel }}</div>
     </div>
   </div>

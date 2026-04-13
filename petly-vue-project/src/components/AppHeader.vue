@@ -11,7 +11,7 @@ import SearchBar from '@/components/SearchBar.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 type MenuOption = {
-  id: 'profile' | 'categories' | 'dashboard' | 'login' | 'register' | 'petNew';
+  id: 'profile' | 'categories' | 'dashboard' | 'login' | 'register' | 'domesticAnimalNew';
   label: string;
   icon: string;
 };
@@ -26,24 +26,24 @@ const menuContainerRef = ref<HTMLElement | null>(null);
 const menuOptions = computed<MenuOption[]>(() => {
   if (!currentUser.value) {
     return [
-      { id: 'login', label: 'Iniciar sesion', icon: '->' },
-      { id: 'register', label: 'Crear cuenta', icon: '+' },
-      { id: 'categories', label: 'Categorias', icon: 'o' },
+      { id: 'login', label: 'Sign In', icon: '->' },
+      { id: 'register', label: 'Create Account', icon: '+' },
+      { id: 'categories', label: 'Categories', icon: 'o' },
     ];
   }
 
   if (currentUser.value.role === 'admin') {
     return [
-      { id: 'profile', label: 'Perfil', icon: 'o' },
-      { id: 'dashboard', label: 'Panel admin', icon: '[]' },
-      { id: 'petNew', label: 'Nueva mascota', icon: '+' },
-      { id: 'categories', label: 'Categorias', icon: 'o' },
+      { id: 'profile', label: 'Profile', icon: 'o' },
+      { id: 'dashboard', label: 'Admin Dashboard', icon: '[]' },
+      { id: 'domesticAnimalNew', label: 'New Domestic Animal', icon: '+' },
+      { id: 'categories', label: 'Categories', icon: 'o' },
     ];
   }
 
   return [
-    { id: 'profile', label: 'Perfil', icon: 'o' },
-    { id: 'categories', label: 'Categorias', icon: 'o' },
+    { id: 'profile', label: 'Profile', icon: 'o' },
+    { id: 'categories', label: 'Categories', icon: 'o' },
   ];
 });
 
@@ -78,8 +78,8 @@ async function goToOption(optionId: MenuOption['id']): Promise<void> {
     return;
   }
 
-  if (optionId === 'petNew') {
-    await router.push({ name: 'petNew' });
+  if (optionId === 'domesticAnimalNew') {
+    await router.push({ name: 'domesticAnimalNew' });
     return;
   }
 
@@ -140,7 +140,7 @@ onBeforeUnmount(() => {
         <button
           class="header-menu-button"
           type="button"
-          aria-label="Abrir menu"
+          aria-label="Open menu"
           @click.stop="toggleDropdown"
         >
           <span v-if="!dropdownOpen" class="header-menu-icon">=</span>

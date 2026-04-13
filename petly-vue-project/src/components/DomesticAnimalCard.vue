@@ -7,13 +7,13 @@ import defaultImage from '@/assets/default.jpg';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 const props = defineProps<{
-  pet: DomesticAnimalInterface;
+  domesticAnimal: DomesticAnimalInterface;
 }>();
 
 const router = useRouter();
 
 function goToDetail(): void {
-  router.push({ name: 'petDetail', params: { id: props.pet.id } });
+  router.push({ name: 'domesticAnimalDetail', params: { id: props.domesticAnimal.id } });
 }
 
 function handleImageError(event: Event): void {
@@ -33,17 +33,17 @@ function handleImageError(event: Event): void {
     <!-- Imagen -->
     <div class="w-full h-56 flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden">
       <img
-        :src="pet.image"
-        :alt="pet.breed"
+        :src="domesticAnimal.image"
+        :alt="domesticAnimal.breed"
         class="object-contain h-full w-full"
         @error="handleImageError"
       />
     </div>
 
-    <!-- Raza -->
+    <!-- Breed -->
     <div class="mt-4 text-center">
       <h3 class="text-lg font-bold text-gray-800">
-        {{ pet.breed }}
+        {{ domesticAnimal.breed }}
       </h3>
     </div>
   </div>

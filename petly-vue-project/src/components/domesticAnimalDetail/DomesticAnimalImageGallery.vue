@@ -4,7 +4,7 @@ import defaultImage from '@/assets/default.jpg';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 
 defineProps<{
-  pet: DomesticAnimalInterface;
+  domesticAnimal: DomesticAnimalInterface;
 }>();
 
 function handleImageError(event: Event): void {
@@ -22,14 +22,14 @@ function handleImageError(event: Event): void {
       <img
         v-for="n in 3"
         :key="n"
-        :src="pet.image"
+        :src="domesticAnimal.image"
         class="rounded-xl object-cover h-24 cursor-pointer"
         @error="handleImageError"
       />
     </div>
 
     <img
-      :src="pet.image"
+      :src="domesticAnimal.image"
       class="rounded-2xl object-contain bg-gray-100 p-4"
       @error="handleImageError"
     />

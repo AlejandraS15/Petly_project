@@ -1,28 +1,25 @@
 <!-- Autor: Nombre Apellido -->
 <script setup lang="ts">
 // External imports
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
 import { DomesticAnimalService } from '@/services/DomesticAnimalService';
 import { CategoryService } from '@/services/CategoryService';
-import { useCategoryStore } from '@/stores/categoryStore';
-import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-import PetForm from '@/components/petDetail/PetForm.vue';
+import DomesticAnimalForm from '@/components/domesticAnimalDetail/DomesticAnimalForm.vue';
 
 const router = useRouter();
-const animalStore = useDomesticAnimalStore();
-const categoryStore = useCategoryStore();
+const categories = ref(CategoryService.getCategories());
 
 const isSubmitting = ref<boolean>(false);
 const feedbackMessage = ref<string>('');
 
 function handleCreate(data: CreateDomesticAnimalDTO): void {
   isSubmitting.value = true;
-  const created = DomesticAnimalService.createAnimal(data);
+  const created = DomesticAnimalService.createAnimalAndSync(data);
   isSubmitting.value = false;
 
   if (!created) {
@@ -30,26 +27,21 @@ function handleCreate(data: CreateDomesticAnimalDTO): void {
     return;
   }
 
-  animalStore.setAnimals([...animalStore.animals, created]);
-
-  router.push({ name: 'petAdminDetail', params: { id: created.id } });
+  router.push({ name: 'domesticAnimalAdminDetail', params: { id: created.id } });
 }
 
 function handleCancel(): void {
   router.push({ name: 'dashboard' });
 }
 
-onMounted(() => {
-  CategoryService.getCategories();
-});
 </script>
 
 <template>
   <main class="max-w-4xl mx-auto px-6 py-10">
     <h1 class="app-title mb-6">New Animal</h1>
 
-    <PetForm
-      :categories="categoryStore.categories"
+    <DomesticAnimalForm
+      :categories="categories"
       :is-submitting="isSubmitting"
       :feedback-message="feedbackMessage"
       @submit="handleCreate"

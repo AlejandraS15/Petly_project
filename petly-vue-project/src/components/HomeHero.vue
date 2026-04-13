@@ -11,13 +11,13 @@
     <!-- TEXTO -->
     <div>
       <h1 class="text-5xl font-black leading-tight">
-        Discover Pet Breeds
+        Discover DomesticAnimal Breeds
         <br />
         from Around the World
       </h1>
 
       <p class="mt-6 text-gray-500 max-w-md">
-        Learn about different types of dogs, cats, and other pets, their characteristics, origins,
+        Learn about different types of dogs, cats, and other domesticAnimals, their characteristics, origins,
         and unique personalities.
       </p>
 
@@ -49,8 +49,8 @@
     <!-- IMAGEN -->
     <div class="flex justify-center">
       <img
-        src="@/assets/pets-hero.png"
-        alt="Pets illustration"
+        src="@/assets/domesticAnimal-hero.png"
+        alt="DomesticAnimal illustration"
         class="max-h-[420px] object-contain"
       />
     </div>
