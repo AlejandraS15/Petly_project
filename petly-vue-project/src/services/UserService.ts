@@ -3,10 +3,8 @@
 // Internal imports
 import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO';
 import type { UserInterface } from '@/interfaces/UserInterface';
-import { AuthService } from '@/services/AuthService';
-
-const USERS_STORAGE_KEY = 'users';
-const ACTIVE_USER_STORAGE_KEY = 'activeUser';
+import { useAuthStore } from '@/stores/authStore';
+import { useUserStore } from '@/stores/userStore';
 
 type UserUpdateResult = {
   success: boolean;
@@ -16,7 +14,9 @@ type UserUpdateResult = {
 
 export class UserService {
   static updateActiveUserProfile(payload: UpdateUserProfileDTO): UserUpdateResult {
-    const activeUser = AuthService.getActiveUser();
+    const authStore = useAuthStore();
+    const userStore = useUserStore();
+    const activeUser = authStore.currentUser;
 
     if (!activeUser) {
       return {
@@ -26,7 +26,7 @@ export class UserService {
       };
     }
 
-    const users = AuthService.getUsers();
+    const users = userStore.users;
     const normalizedFullName = payload.fullName.trim();
     const normalizedEmail = payload.email.trim().toLowerCase();
     const normalizedUsername = payload.username.trim();
@@ -73,9 +73,8 @@ export class UserService {
     };
 
     const updatedUsers = users.map((user) => (user.id === activeUser.id ? updatedUser : user));
-
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updatedUsers));
-    localStorage.setItem(ACTIVE_USER_STORAGE_KEY, JSON.stringify(updatedUser));
+    userStore.setUsers(updatedUsers);
+    authStore.setCurrentUser(updatedUser);
 
     return {
       success: true,

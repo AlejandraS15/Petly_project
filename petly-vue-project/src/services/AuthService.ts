@@ -1,16 +1,11 @@
 // Autor: Alejandro Arteaga
 
-// Autor: Alejandro Arteaga
-
 // Internal imports
-import type { CreateUserDTO } from '@/dtos/auth/CreateUserDTO';
 import type { LoginDTO } from '@/dtos/auth/LoginDTO';
 import type { RegisterUserDTO } from '@/dtos/auth/RegisterUserDTO';
 import type { UserInterface } from '@/interfaces/UserInterface';
-import { seedUsers } from '@/seeders/userSeeder';
-
-const USERS_STORAGE_KEY = 'users';
-const ACTIVE_USER_STORAGE_KEY = 'activeUser';
+import { useAuthStore } from '@/stores/authStore';
+import { useUserStore } from '@/stores/userStore';
 
 type AuthResult = {
   success: boolean;
@@ -19,41 +14,30 @@ type AuthResult = {
 };
 
 export class AuthService {
+  private static ensureInitialized(): void {
+    useUserStore().initializeUsers();
+    useAuthStore().initializeAuth();
+  }
+
+  static initializeAuthStore(): void {
+    this.ensureInitialized();
+  }
+
   static getUsers(): UserInterface[] {
-    const storedUsers = localStorage.getItem(USERS_STORAGE_KEY);
-
-    if (!storedUsers) {
-      const seededUsers = seedUsers().map((user) => this.createUserFromDTO(user));
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(seededUsers));
-      return seededUsers;
-    }
-
-    try {
-      return JSON.parse(storedUsers) as UserInterface[];
-    } catch {
-      const seededUsers = seedUsers().map((user) => this.createUserFromDTO(user));
-      localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(seededUsers));
-      return seededUsers;
-    }
+    this.ensureInitialized();
+    return useUserStore().users;
   }
 
   static getActiveUser(): UserInterface | null {
-    const storedUser = localStorage.getItem(ACTIVE_USER_STORAGE_KEY);
-
-    if (!storedUser) {
-      return null;
-    }
-
-    try {
-      return JSON.parse(storedUser) as UserInterface;
-    } catch {
-      localStorage.removeItem(ACTIVE_USER_STORAGE_KEY);
-      return null;
-    }
+    this.ensureInitialized();
+    return useAuthStore().currentUser;
   }
 
   static registerUser(dto: RegisterUserDTO): AuthResult {
-    const users = this.getUsers();
+    this.ensureInitialized();
+    const userStore = useUserStore();
+    const authStore = useAuthStore();
+    const users = userStore.users;
     const normalizedEmail = dto.email.trim().toLowerCase();
     const normalizedUsername = dto.username.trim().toLowerCase();
 
@@ -86,8 +70,8 @@ export class AuthService {
     });
 
     const updatedUsers = [...users, newUser];
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(updatedUsers));
-    localStorage.setItem(ACTIVE_USER_STORAGE_KEY, JSON.stringify(newUser));
+    userStore.setUsers(updatedUsers);
+    authStore.setCurrentUser(newUser);
 
     return {
       success: true,
@@ -97,7 +81,9 @@ export class AuthService {
   }
 
   static login(dto: LoginDTO): AuthResult {
-    const users = this.getUsers();
+    this.ensureInitialized();
+    const users = useUserStore().users;
+    const authStore = useAuthStore();
     const normalizedCredential = dto.usernameOrEmail.trim().toLowerCase();
 
     const matchedUser = users.find((user) => {
@@ -116,7 +102,7 @@ export class AuthService {
       };
     }
 
-    localStorage.setItem(ACTIVE_USER_STORAGE_KEY, JSON.stringify(matchedUser));
+    authStore.setCurrentUser(matchedUser);
 
     return {
       success: true,
@@ -126,14 +112,33 @@ export class AuthService {
   }
 
   static logout(): void {
-    localStorage.removeItem(ACTIVE_USER_STORAGE_KEY);
+    this.ensureInitialized();
+    useAuthStore().clearCurrentUser();
+  }
+
+  static loginAndSync(dto: LoginDTO): AuthResult {
+    return this.login(dto);
+  }
+
+  static registerAndSync(dto: RegisterUserDTO): AuthResult {
+    return this.registerUser(dto);
+  }
+
+  static logoutAndSync(): void {
+    this.logout();
   }
 
   static isAuthenticated(): boolean {
-    return this.getActiveUser() !== null;
+    this.ensureInitialized();
+    return useAuthStore().isAuthenticated;
   }
 
-  private static createUserFromDTO(dto: CreateUserDTO): UserInterface {
+  static isAdmin(): boolean {
+    this.ensureInitialized();
+    return useAuthStore().currentUser?.role === 'admin';
+  }
+
+  private static createUserFromDTO(dto: RegisterUserDTO): UserInterface {
     return {
       id: crypto.randomUUID(),
       fullName: dto.fullName,

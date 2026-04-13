@@ -17,14 +17,14 @@ type MenuOption = {
 };
 
 const authStore = useAuthStore();
-const { isAuthenticated, activeUser } = storeToRefs(authStore);
+const { isAuthenticated, currentUser } = storeToRefs(authStore);
 const router = useRouter();
 
 const dropdownOpen = ref<boolean>(false);
 const menuContainerRef = ref<HTMLElement | null>(null);
 
 const menuOptions = computed<MenuOption[]>(() => {
-  if (!activeUser.value) {
+  if (!currentUser.value) {
     return [
       { id: 'login', label: 'Iniciar sesion', icon: '->' },
       { id: 'register', label: 'Crear cuenta', icon: '+' },
@@ -32,7 +32,7 @@ const menuOptions = computed<MenuOption[]>(() => {
     ];
   }
 
-  if (activeUser.value.role === 'admin') {
+  if (currentUser.value.role === 'admin') {
     return [
       { id: 'profile', label: 'Perfil', icon: 'o' },
       { id: 'dashboard', label: 'Panel admin', icon: '[]' },
@@ -133,7 +133,7 @@ onBeforeUnmount(() => {
     <!-- Nav -->
     <nav class="flex items-center gap-3">
       <RouterLink v-if="isAuthenticated" :to="{ name: 'profile' }" class="header-nav-link">
-        {{ activeUser?.username }}
+        {{ currentUser?.username }}
       </RouterLink>
 
       <div ref="menuContainerRef" class="header-dropdown">

@@ -1,19 +1,30 @@
 // Autor: Alejandra Suarez
 
 // Internal imports
+import type { CategoryInterface } from '@/interfaces/CategoryInterface';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
 import { seedCategories } from '@/seeders/categorySeeder';
 import { seedReviews } from '@/seeders/reviewSeeder';
+
+function getRequiredCategory(categories: CategoryInterface[], id: string): CategoryInterface {
+  const category = categories.find((currentCategory) => currentCategory.id === id);
+
+  if (!category) {
+    throw new Error(`Missing required category seed: ${id}`);
+  }
+
+  return category;
+}
 
 export function seedDomesticAnimals(): DomesticAnimalInterface[] {
   const categories = seedCategories();
   const reviews = seedReviews();
 
-  const catCategory = categories.find((category) => category.id === 'cat')!;
-  const dogCategory = categories.find((category) => category.id === 'dog')!;
-  const birdCategory = categories.find((category) => category.id === 'bird')!;
-  const rabbitCategory = categories.find((category) => category.id === 'rabbit')!;
-  const hamsterCategory = categories.find((category) => category.id === 'hamster')!;
+  const catCategory = getRequiredCategory(categories, 'cat');
+  const dogCategory = getRequiredCategory(categories, 'dog');
+  const birdCategory = getRequiredCategory(categories, 'bird');
+  const rabbitCategory = getRequiredCategory(categories, 'rabbit');
+  const hamsterCategory = getRequiredCategory(categories, 'hamster');
 
   return [
     {

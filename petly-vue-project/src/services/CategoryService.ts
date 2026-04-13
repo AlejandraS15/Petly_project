@@ -9,7 +9,7 @@ export class CategoryService {
     const categoryStore = useCategoryStore();
 
     if (categoryStore.categories.length === 0) {
-      categoryStore.loadCategories();
+      categoryStore.initializeCategories();
     }
 
     return categoryStore.categories;
@@ -17,5 +17,9 @@ export class CategoryService {
 
   static getCategoryById(id: string): CategoryInterface | undefined {
     return this.getCategories().find((category) => category.id === id);
+  }
+
+  static selectCategory(categoryId: string): void {
+    useCategoryStore().setSelectedCategory(categoryId);
   }
 }

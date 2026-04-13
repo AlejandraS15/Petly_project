@@ -6,6 +6,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 // Internal imports
+import { AuthService } from '@/services/AuthService';
 import { useAuthStore } from '@/stores/authStore';
 
 const authStore = useAuthStore();
@@ -24,7 +25,7 @@ const canSubmit = computed(() => {
 });
 
 function resolveRedirect(): { name: 'home' | 'dashboard' } {
-  return authStore.activeUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
+  return authStore.currentUser?.role === 'admin' ? { name: 'dashboard' } : { name: 'home' };
 }
 
 function handleLogin(): void {
@@ -34,7 +35,7 @@ function handleLogin(): void {
   }
 
   isSubmitting.value = true;
-  const result = authStore.login({
+  const result = AuthService.loginAndSync({
     usernameOrEmail: form.usernameOrEmail,
     password: form.password,
   });
@@ -50,7 +51,7 @@ function handleLogin(): void {
 }
 
 onMounted(() => {
-  authStore.initializeAuth();
+  AuthService.initializeAuthStore();
 
   if (authStore.isAuthenticated) {
     router.replace(resolveRedirect());

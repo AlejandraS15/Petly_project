@@ -4,6 +4,7 @@ import { ref } from 'vue';
 
 // Internal imports
 import type { CreateReviewDTO } from '@/dtos/review/CreateReviewDTO';
+import { DomesticAnimalService } from '@/services/DomesticAnimalService';
 import { useAuthStore } from '@/stores/authStore';
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
@@ -26,11 +27,16 @@ function submitReview(): void {
     rating: rating.value,
     comment: comment.value,
     postDate: new Date(),
-    userId: authStore.activeUser!.id,
+    userId: authStore.currentUser!.id,
     domesticAnimalId: props.animalId,
   };
 
-  store.addReview(props.animalId, dto);
+  const result = DomesticAnimalService.addReview(props.animalId, dto, store.animals);
+
+  if (result) {
+    store.setAnimals(result.updatedAnimals);
+  }
+
   emit('close');
 }
 </script>

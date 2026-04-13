@@ -6,6 +6,8 @@ import { useRouter } from 'vue-router';
 
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
+import { DomesticAnimalService } from '@/services/DomesticAnimalService';
+import { CategoryService } from '@/services/CategoryService';
 import { useCategoryStore } from '@/stores/categoryStore';
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
@@ -20,13 +22,15 @@ const feedbackMessage = ref<string>('');
 
 function handleCreate(data: CreateDomesticAnimalDTO): void {
   isSubmitting.value = true;
-  const created = animalStore.createAnimal(data);
+  const created = DomesticAnimalService.createAnimal(data);
   isSubmitting.value = false;
 
   if (!created) {
     feedbackMessage.value = 'Could not create animal: invalid category.';
     return;
   }
+
+  animalStore.setAnimals([...animalStore.animals, created]);
 
   router.push({ name: 'petAdminDetail', params: { id: created.id } });
 }
@@ -36,7 +40,7 @@ function handleCancel(): void {
 }
 
 onMounted(() => {
-  categoryStore.loadCategories();
+  CategoryService.getCategories();
 });
 </script>
 

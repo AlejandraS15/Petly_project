@@ -22,7 +22,7 @@ const route = useRoute();
 const router = useRouter();
 const animalStore = useDomesticAnimalStore();
 const authStore = useAuthStore();
-const { isAdmin } = storeToRefs(authStore);
+const { currentUser } = storeToRefs(authStore);
 
 const pet = ref<DomesticAnimalInterface | null>(null);
 
@@ -45,7 +45,7 @@ function goToAdminView(): void {
 
 <template>
   <main v-if="pet" class="max-w-7xl mx-auto px-6 py-10">
-    <div v-if="isAdmin" class="mb-6 flex justify-end">
+    <div v-if="currentUser?.role === 'admin'" class="mb-6 flex justify-end">
       <button class="btn-primary" type="button" @click="goToAdminView">Edit Animal</button>
     </div>
 

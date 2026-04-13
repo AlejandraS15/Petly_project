@@ -7,6 +7,8 @@ import { useRouter } from 'vue-router';
 
 // Internal imports
 import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO';
+import { AuthService } from '@/services/AuthService';
+import { UserService } from '@/services/UserService';
 import { useAuthStore } from '@/stores/authStore';
 
 type ProfileDetail = {
@@ -26,7 +28,7 @@ const editForm = reactive<UpdateUserProfileDTO>({
   username: '',
 });
 
-const currentUser = computed(() => authStore.activeUser);
+const currentUser = computed(() => authStore.currentUser);
 const canSubmit = computed(() => {
   return (
     editForm.fullName.trim().length > 0 &&
@@ -49,7 +51,7 @@ const profileDetails = computed<ProfileDetail[]>(() => {
 });
 
 function handleLogout(): void {
-  authStore.logout();
+  AuthService.logoutAndSync();
   router.push({ name: 'login' });
 }
 
@@ -77,7 +79,7 @@ function submitProfileUpdate(): void {
   }
 
   isSubmitting.value = true;
-  const result = authStore.updateProfile({
+  const result = UserService.updateActiveUserProfile({
     fullName: editForm.fullName,
     email: editForm.email,
     username: editForm.username,

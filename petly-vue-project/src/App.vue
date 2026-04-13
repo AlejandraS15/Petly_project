@@ -5,13 +5,12 @@ import { RouterView } from 'vue-router';
 
 // Internal imports
 import AppHeader from '@/components/AppHeader.vue';
-import { useAuthStore } from '@/stores/authStore';
+import { AuthService } from '@/services/AuthService';
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
-const authStore = useAuthStore();
 const domesticAnimalStore = useDomesticAnimalStore();
 
-authStore.initializeAuth();
+AuthService.initializeAuthStore();
 </script>
 
 <template>

@@ -7,6 +7,8 @@ import { useRoute, useRouter } from 'vue-router';
 // Internal imports
 import type { CreateDomesticAnimalDTO } from '@/dtos/animal/CreateDomesticAnimalDTO';
 import type { DomesticAnimalInterface } from '@/interfaces/DomesticAnimalInterface';
+import { DomesticAnimalService } from '@/services/DomesticAnimalService';
+import { CategoryService } from '@/services/CategoryService';
 import { useCategoryStore } from '@/stores/categoryStore';
 import { useDomesticAnimalStore } from '@/stores/domesticAnimalStore';
 
@@ -59,7 +61,7 @@ function handleUpdate(data: CreateDomesticAnimalDTO): void {
   if (!pet.value) return;
 
   isSubmitting.value = true;
-  const updated = animalStore.updateAnimal(pet.value.id, data);
+  const updated = DomesticAnimalService.updateAnimal(pet.value.id, data, animalStore.animals);
   isSubmitting.value = false;
 
   if (!updated) {
@@ -67,6 +69,7 @@ function handleUpdate(data: CreateDomesticAnimalDTO): void {
     return;
   }
 
+  animalStore.setAnimals(animalStore.animals.map((a) => (a.id === pet.value?.id ? updated : a)));
   pet.value = updated;
   isEditing.value = false;
   feedbackMessage.value = '';
@@ -83,13 +86,18 @@ function cancelDelete(): void {
 function handleDelete(): void {
   if (!pet.value) return;
 
-  animalStore.deleteAnimal(pet.value.id);
+  const success = DomesticAnimalService.deleteAnimal(pet.value.id, animalStore.animals);
+
+  if (success) {
+    animalStore.setAnimals(animalStore.animals.filter((a) => a.id !== pet.value?.id));
+  }
+
   router.push({ name: 'home' });
 }
 
 onMounted(() => {
   animalStore.loadAnimals();
-  categoryStore.loadCategories();
+  CategoryService.getCategories();
 
   const id = route.params.id as string;
   const found = animalStore.getAnimalById(id);

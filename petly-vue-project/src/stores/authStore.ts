@@ -5,75 +5,51 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 // Internal imports
-import type { LoginDTO } from '@/dtos/auth/LoginDTO';
-import type { RegisterUserDTO } from '@/dtos/auth/RegisterUserDTO';
-import type { UpdateUserProfileDTO } from '@/dtos/user/UpdateUserProfileDTO';
 import type { UserInterface } from '@/interfaces/UserInterface';
-import { AuthService } from '@/services/AuthService';
-import { UserService } from '@/services/UserService';
 
-type AuthOperationResult = {
-  success: boolean;
-  message: string;
-};
+const ACTIVE_USER_STORAGE_KEY = 'activeUser';
 
 export const useAuthStore = defineStore('auth', () => {
-  const activeUser = ref<UserInterface | null>(null);
+  const currentUser = ref<UserInterface | null>(null);
 
-  const isAuthenticated = computed(() => activeUser.value !== null);
-  const isAdmin = computed(() => activeUser.value?.role === 'admin');
+  const isAuthenticated = computed(() => currentUser.value !== null);
 
   function initializeAuth(): void {
-    activeUser.value = AuthService.getActiveUser();
-    AuthService.getUsers();
+    const storedUser = localStorage.getItem(ACTIVE_USER_STORAGE_KEY);
+
+    if (!storedUser) {
+      currentUser.value = null;
+      return;
+    }
+
+    try {
+      currentUser.value = JSON.parse(storedUser) as UserInterface;
+    } catch {
+      currentUser.value = null;
+      localStorage.removeItem(ACTIVE_USER_STORAGE_KEY);
+    }
   }
 
-  function login(credentials: LoginDTO): AuthOperationResult {
-    const result = AuthService.login(credentials);
+  function setCurrentUser(user: UserInterface | null): void {
+    currentUser.value = user;
 
-    activeUser.value = result.user;
+    if (!user) {
+      localStorage.removeItem(ACTIVE_USER_STORAGE_KEY);
+      return;
+    }
 
-    return {
-      success: result.success,
-      message: result.message,
-    };
+    localStorage.setItem(ACTIVE_USER_STORAGE_KEY, JSON.stringify(user));
   }
 
-  function register(payload: RegisterUserDTO): AuthOperationResult {
-    const result = AuthService.registerUser(payload);
-
-    activeUser.value = result.user;
-
-    return {
-      success: result.success,
-      message: result.message,
-    };
-  }
-
-  function logout(): void {
-    AuthService.logout();
-    activeUser.value = null;
-  }
-
-  function updateProfile(payload: UpdateUserProfileDTO): AuthOperationResult {
-    const result = UserService.updateActiveUserProfile(payload);
-
-    activeUser.value = result.user;
-
-    return {
-      success: result.success,
-      message: result.message,
-    };
+  function clearCurrentUser(): void {
+    setCurrentUser(null);
   }
 
   return {
-    activeUser,
+    currentUser,
     isAuthenticated,
-    isAdmin,
     initializeAuth,
-    login,
-    register,
-    logout,
-    updateProfile,
+    setCurrentUser,
+    clearCurrentUser,
   };
 });

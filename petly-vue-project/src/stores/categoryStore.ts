@@ -18,39 +18,42 @@ export const useCategoryStore = defineStore('category', () => {
     return categories.value.find((category) => category.id === selectedCategoryId.value);
   }
 
-  function saveCategories(currentCategories: CategoryInterface[]): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentCategories));
+  function setCategories(nextCategories: CategoryInterface[]): void {
+    categories.value = nextCategories;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextCategories));
   }
 
-  // Actions
-  function loadCategories(): void {
+  function setSelectedCategory(categoryId: string): void {
+    selectedCategoryId.value = categoryId;
+  }
+
+  function resetCategoryState(): void {
+    categories.value = [];
+    selectedCategoryId.value = 'all';
+  }
+
+  function initializeCategories(): void {
     const storedCategories = localStorage.getItem(STORAGE_KEY);
 
     if (!storedCategories) {
-      const seededCategories = seedCategories();
-      categories.value = seededCategories;
-      saveCategories(seededCategories);
+      setCategories(seedCategories());
       return;
     }
 
     try {
       categories.value = JSON.parse(storedCategories) as CategoryInterface[];
     } catch {
-      const seededCategories = seedCategories();
-      categories.value = seededCategories;
-      saveCategories(seededCategories);
+      setCategories(seedCategories());
     }
-  }
-
-  function selectCategory(categoryId: string): void {
-    selectedCategoryId.value = categoryId;
   }
 
   return {
     categories,
     selectedCategoryId,
-    loadCategories,
-    selectCategory,
+    setCategories,
+    setSelectedCategory,
+    resetCategoryState,
+    initializeCategories,
     getSelectedCategory,
   };
 });
